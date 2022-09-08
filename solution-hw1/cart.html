@@ -1,29 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Cart</title>
   <head>
-    <link rel = "stylesheet" href = "stylesheet.css">
-    <a href = "./gallery.html">
-        <img src = "HW1/logo/logo-01.svg" alt = "Bun Bun Logo" width = 200>
-      </a>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <a href="./gallery.html">
+      <img src="HW1/logo/logo-01.svg" alt="Bun Bun Logo" width="200" />
+    </a>
   </head>
+  <hr size="5px" />
+  <div class="center">
+    <h3>
+      <a href="./gallery.html">PRODUCTS</a>
+    </h3>
+
+    <h3>
+      <a href="./cart.html">CART</a>
+    </h3>
+  </div>
   <body>
-    <div class = "center">
+    <div class="center_body">
       <h2>Shopping Cart</h2>
-      <img src = "HW1/products/original-cinnamon-roll.jpg" width = 50>
+      <img
+        class="productimg"
+        src="HW1/products/original-cinnamon-roll.jpg"
+        width="75"
+      />
       <h6>Remove</h6>
-      <h3>Original Cinnamon Roll<br>Glazing: Keep original<br>Pack Size: 1</h3>
-      <p>$2.49</p>
-      
-      <div class = "center">
-      <img src = "HW1/products/double-chocolate-cinnamon-roll.jpg" width = 50>
-      <h6>Remove</h6>
-      <h3>Double Chocolate Cinnamon Roll<br>Glazing: Sugar milk<br>Pack Size: 6</h3>
-      <p>$27.45</p>
-  
-      <h4>Total: $21.94</h4>
-      <button>Checkout</button>
+      <div class="center">
+        <h3>
+          Original Cinnamon Roll<br />Glazing: Keep original<br />Pack Size: 1
+        </h3>
+        <p>$2.49</p>
+      </div>
+      <div class="center_body">
+        <img
+          class="productimg"
+          src="HW1/products/double-chocolate-cinnamon-roll.jpg"
+          width="75"
+        />
+        <h6>Remove</h6>
+
+        <!-- <div class = "center"> -->
+        <h3>
+          Double Chocolate Cinnamon Roll<br />Glazing: Sugar milk<br />Pack
+          Size: 6
+        </h3>
+        <p>$27.45</p>
+        <!-- </div> -->
+        <hr size="5px" width="500" />
+        <div id="checkout">
+          <h4>Total: $21.94</h4>
+          <button>Checkout</button>
+        </div>
+      </div>
     </div>
-    
   </body>
+</html>

@@ -3,11 +3,14 @@
   <meta charset="UTF-8">
   <title>Products</title>
   <head>
+    <!-- <div class = "center"> -->
     <link rel = "stylesheet" href = "stylesheet.css">
     <a href = "./gallery.html">
         <img src = "HW1/logo/logo-01.svg" alt = "Bun Bun Logo" width = 200>
       </a>
+    <!-- </div> -->
   </head>
+  <hr size = 5px>
   <body>
     <div class = "center">
       <h3>
@@ -17,30 +20,38 @@
       <h3>
           <a href="./cart.html">CART</a>
       </h3>
-    </div>
-    
-    <span class = "center_left">
+      <div class = "center_body">
       <h2>Original cinnamon roll</h2>
-      <img src = "HW1/products/original-cinnamon-roll.jpg" width = 500>
-      <p>
-          Customize our delicious, <br> hand-made cinnamon roll to <br> your liking!
-      </p>
-      <p>Glazing: </p>
-      <select name = "Pack Size">
-          <option value = "1">Keep original</option>
-          <option value = "3">Sugar milk</option>
-          <option value = "6">Vanilla milk</option>
-          <option value = "12">Double chocolate</option>
-      </select>
-      <div class="dropdown">
-      <p>Pack size: </p>
-      <select name = "Pack Size">
-          <option value = "1">1</option>
-          <option value = "3">3</option>
-          <option value = "6">6</option>
-          <option value = "12">12</option>
-      </select>
+        <img class = "productimg" src = "HW1/products/original-cinnamon-roll.jpg" width = 500>
+        <div class = "center_text">
+        <p>
+            Customize our delicious, <br> hand-made cinnamon roll to <br> your liking!
+        </p>
+        <div ID = dropdown_menus>
+          <p>Glazing: </p>
+          <div class = "dropdown_content">
+        <select name = "Pack Size">
+            <option value = "1">Keep original</option>
+            <option value = "3">Sugar milk</option>
+            <option value = "6">Vanilla milk</option>
+            <option value = "12">Double chocolate</option>
+        </select>
+      </div>
+        <div class="dropdown">
+        <p>Pack size: </p>
+        <div class = "dropdown_content">
+          <select name = "Pack Size">
+            <option value = "1">1</option>
+            <option value = "3">3</option>
+            <option value = "6">6</option>
+            <option value = "12">12</option>
+        </select>
+        </div>
+      </div>
+        </div>
+      </div>
+      </div>
+    <div>
+      <p>$2.49 <button ID="add_to_cart">Add to Cart</button></p>
     </div>
-    </span>
-    
   </body>
