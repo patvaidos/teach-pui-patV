@@ -1,57 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Products</title>
   <head>
-    <!-- <div class = "center"> -->
-    <link rel = "stylesheet" href = "stylesheet.css">
-    <a href = "./gallery.html">
-        <img src = "HW1/logo/logo-01.svg" alt = "Bun Bun Logo" width = 200>
-      </a>
-    <!-- </div> -->
+    <!--Bun Bun Bake Shop logo. When clicked, directs user back to gallery page-->
+    <link rel="stylesheet" href="./css/stylesheet.css" />
+    <a href="./gallery.html">
+      <img src="HW1/logo/logo-01.svg" alt="Bun Bun Logo" width="200" />
+    </a>
   </head>
-  <hr size = 5px>
+  <hr />
+  <!-- Navigation menu: directs user to product gallery page or cart.-->
   <body>
-    <div class = "center">
+    <div class="center">
       <h3>
-        <a href="./gallery.html">PRODUCTS</a>
+        <a class="hover_elements" href="./gallery.html">PRODUCTS</a>
       </h3>
-  
+
       <h3>
-          <a href="./cart.html">CART</a>
+        <a class="hover_elements" href="./cart.html">CART</a>
       </h3>
-      <div class = "center_body">
-      <h2>Original cinnamon roll</h2>
-        <img class = "productimg" src = "HW1/products/original-cinnamon-roll.jpg" width = 500>
-        <div class = "center_text">
-        <p>
-            Customize our delicious, <br> hand-made cinnamon roll to <br> your liking!
-        </p>
-        <div ID = dropdown_menus>
-          <p>Glazing: </p>
-          <div class = "dropdown_content">
-        <select name = "Pack Size">
-            <option value = "1">Keep original</option>
-            <option value = "3">Sugar milk</option>
-            <option value = "6">Vanilla milk</option>
-            <option value = "12">Double chocolate</option>
-        </select>
-      </div>
-        <div class="dropdown">
-        <p>Pack size: </p>
-        <div class = "dropdown_content">
-          <select name = "Pack Size">
-            <option value = "1">1</option>
-            <option value = "3">3</option>
-            <option value = "6">6</option>
-            <option value = "12">12</option>
-        </select>
+      <!--Product detail page. Shows product, product name, and dropdown menus to select pack size and glazing.-->
+      <div class="center_body">
+        <h2>Original cinnamon roll</h2>
+        <img
+          class="productimg"
+          src="HW1/products/original-cinnamon-roll.jpg"
+          width="500"
+          alt="Original cinnamon roll"
+        />
+        <div class="center_text">
+          <p>
+            Customize our delicious, <br />
+            hand-made cinnamon roll to <br />
+            your liking!
+          </p>
+          <!--Glazing dropdown menu-->
+          <div id="dropdown_menus">
+            <p>Glazing:</p>
+            <div class="dropdown_content">
+              <select name="Pack Size">
+                <option value="1">Keep original</option>
+                <option value="3">Sugar milk</option>
+                <option value="6">Vanilla milk</option>
+                <option value="12">Double chocolate</option>
+              </select>
+            </div>
+            <!--Pack size dropdown menu-->
+            <div class="dropdown">
+              <p>Pack size:</p>
+              <div class="dropdown_content">
+                <select name="Pack Size">
+                  <option value="1">1</option>
+                  <option value="3">3</option>
+                  <option value="6">6</option>
+                  <option value="12">12</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-        </div>
+      <!--Add to cart button-->
+      <div>
+        <p>$2.49 <button id="add_to_cart">Add to Cart</button></p>
       </div>
-      </div>
-    <div>
-      <p>$2.49 <button ID="add_to_cart">Add to Cart</button></p>
     </div>
   </body>
+</html>
