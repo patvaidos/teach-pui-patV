@@ -207,6 +207,7 @@ select {
   border: 75px;
   order: 3;
   /* flex-grow: 3; */
+  justify-content: flex-start;
   flex-direction: row;
   /* align-items: center; */
   padding-top: 30px;
@@ -279,7 +280,8 @@ select {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 40px;
 }
 .child-2-1 {
   /* display: flex; */
