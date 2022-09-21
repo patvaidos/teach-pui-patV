@@ -84,13 +84,13 @@ p {
   padding: 0%;
 }
 
-/* .add_to_cart {
+.add_to_cart {
   border: 5px #0000;
   background-color: #f5f900;
   padding: 3%;
   width: 30%;
   font-weight: bold;
-} */
+}
 
 button {
   margin-top: auto;

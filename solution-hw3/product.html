@@ -60,11 +60,19 @@
           <div id="dropdown_menus">
             <p>Glazing:</p>
             <div class="dropdown_content">
-              <select name="Pack Size">
-                <option glazevalue="1">Keep original</option>
-                <option glazevalue="3">Sugar milk</option>
-                <option glazevalue="6">Vanilla milk</option>
-                <option glazevalue="12">Double chocolate</option>
+              <select name="Glazing Options">
+                <option glazevalue1="0" onchange="chooseGlazePrice()">
+                  Keep original
+                </option>
+                <option glazevalue2="1" onchange="chooseGlazePrice()">
+                  Sugar milk
+                </option>
+                <option glazevalue3="2" onchange="chooseGlazePrice()">
+                  Vanilla milk
+                </option>
+                <option glazevalue4="3" onchange="chooseGlazePrice()">
+                  Double chocolate
+                </option>
               </select>
             </div>
           </div>
@@ -73,10 +81,10 @@
             <p>Pack size:</p>
             <div class="dropdown_content">
               <select name="Pack Size">
-                <option packvalue="1">1</option>
-                <option packvalue="3">3</option>
-                <option packvalue="6">6</option>
-                <option packvalue="12">12</option>
+                <option packvalue1="0" onchange="choosePackPrice()">1</option>
+                <option packvalue2="1" onchange="choosePackPrice()">3</option>
+                <option packvalue3="2" onchange="choosePackPrice()">6</option>
+                <option packvalue4="3" onchange="choosePackPrice()">12</option>
               </select>
             </div>
           </div>
