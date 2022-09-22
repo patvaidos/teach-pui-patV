@@ -100,18 +100,13 @@ function calculatePrice(glazing, pack) {
   let finalPrice = basePrice;
   let selectedGlaze = glazingSelectArray[glazingIndex].priceChange;
   let selectedPack = packSelectArray[packIndex].priceChange;
-  console.log("selectedGlaze: " + selectedGlaze);
-  console.log("selectedPack " + selectedPack);
-
-  // for (i = 0; i < glazingSelect.length - 1; ++i) {
-  //   if (glazingSelect[i] == selectGlazing.value.priceChange) {
-  //     let glazingPrice = selectGlazing.value.priceChange;
-  //     console.log(glazingPrice);
-  //     if (packSelect[i] == packSelect.value.priceChange) {
-  //       let packPrice = packSelect.value.priceChange;
   finalPrice = (basePrice + selectedGlaze) * selectedPack;
-  //     }
-  //   }
-  //
-  console.log("Price: " + finalPrice);
+  console.log(finalPrice);
+  finalPrice = finalPrice.toString();
+  document.querySelector("#total").innerText = formatter.format(finalPrice);
 }
+
+var formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
