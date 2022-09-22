@@ -55,7 +55,7 @@ function glazingValueChange() {
 
   glazingIndex = parseInt(selectGlazing.value);
 
-  calculatePrice();
+  calculatePrice(glazingIndex, 0);
 }
 
 function packValueChange() {
@@ -63,7 +63,7 @@ function packValueChange() {
 
   packIndex = parseInt(packSelect.value);
 
-  calculatePrice();
+  calculatePrice(0, packIndex);
 }
 
 let selectGlazing = document.querySelector("#Glazing-Options");
@@ -96,10 +96,10 @@ function createPackDropdown() {
 createGlazingDropdown();
 createPackDropdown();
 
-function calculatePrice() {
+function calculatePrice(glazing, pack) {
   let finalPrice = basePrice;
-  let selectedGlaze = glazingSelectArray[glazingIndex];
-  let selectedPack = packSelectArray[packIndex];
+  let selectedGlaze = glazingSelectArray[glazingIndex].priceChange;
+  let selectedPack = packSelectArray[packIndex].priceChange;
   console.log("selectedGlaze: " + selectedGlaze);
   console.log("selectedPack " + selectedPack);
 
@@ -109,7 +109,7 @@ function calculatePrice() {
   //     console.log(glazingPrice);
   //     if (packSelect[i] == packSelect.value.priceChange) {
   //       let packPrice = packSelect.value.priceChange;
-  finalPrice = (basePrice + glazingPrice) * packPrice;
+  finalPrice = (basePrice + selectedGlaze) * selectedPack;
   //     }
   //   }
   //
