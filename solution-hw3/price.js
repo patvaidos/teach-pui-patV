@@ -1,5 +1,5 @@
-// define constants
 class Product {
+  //class Product contains object with a price change to be applied to the base price as well as the name of the option.
   priceChange;
   optionName;
 
@@ -8,11 +8,14 @@ class Product {
     this.optionName = optionName;
   }
 }
+//Global variables are defined here
 const basePrice = 2.49;
+//Default indexes for the glazing and pack inventories
 let glazingIndex = 0;
 let packIndex = 0;
 
-let glazingSelectArray = [
+//Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
+let glazingArray = [
   {
     optionName: "Keep original",
     priceChange: 0.0,
@@ -31,7 +34,7 @@ let glazingSelectArray = [
   },
 ];
 
-let packSelectArray = [
+let packArray = [
   {
     optionName: 1,
     priceChange: 1,
@@ -49,8 +52,12 @@ let packSelectArray = [
     priceChange: 10,
   },
 ];
+//Variables store the selected HTML element for glazing and pack size respectfully.
+let selectGlazing = document.querySelector("#Glazing-Options");
+let packSelect = document.querySelector("#Pack-Size");
 
 function glazingValueChange() {
+  //Takes the glazing value from HTML element and calculates the index to retrieve the value. Calculates price from index.
   console.log("You selected (glazing)" + selectGlazing.value);
 
   glazingIndex = parseInt(selectGlazing.value);
@@ -59,6 +66,7 @@ function glazingValueChange() {
 }
 
 function packValueChange() {
+  //Takes the pack value from HTML element and calculates the index to retrieve the value. Calculates price from index.
   console.log("You selected (packValue)" + packSelect.value);
 
   packIndex = parseInt(packSelect.value);
@@ -66,16 +74,11 @@ function packValueChange() {
   calculatePrice(0, packIndex);
 }
 
-let selectGlazing = document.querySelector("#Glazing-Options");
-let packSelect = document.querySelector("#Pack-Size");
-
-console.log(selectGlazing);
-console.log(packSelect);
 function createGlazingDropdown() {
+  //Populates the glazing options dropdown menu with glazing objects.
   for (i = 0; i < 4; ++i) {
-    //create an HTML element, choose from array of options using loop index, add to certain menu and display
     var option = document.createElement("option");
-    option.text = glazingSelectArray[i].optionName;
+    option.text = glazingArray[i].optionName;
     option.value = i;
     selectGlazing.add(option);
   }
@@ -83,10 +86,10 @@ function createGlazingDropdown() {
 }
 
 function createPackDropdown() {
+  //Populates the pack options dropdown menu with glazing objects.
   for (i = 0; i < 4; ++i) {
-    //create an HTML element, choose from array of options using loop index, add to certain menu and display
     var option = document.createElement("option");
-    option.text = packSelectArray[i].optionName;
+    option.text = packArray[i].optionName;
     option.value = i;
     packSelect.add(option);
   }
@@ -97,15 +100,17 @@ createGlazingDropdown();
 createPackDropdown();
 
 function calculatePrice(glazing, pack) {
+  //Calculates the final price of the purchase by using a price formula with variables from the glazing & pack size arrays.
   let finalPrice = basePrice;
-  let selectedGlaze = glazingSelectArray[glazingIndex].priceChange;
-  let selectedPack = packSelectArray[packIndex].priceChange;
+  let selectedGlaze = glazingArray[glazingIndex].priceChange;
+  let selectedPack = packArray[packIndex].priceChange;
   finalPrice = (basePrice + selectedGlaze) * selectedPack;
   console.log(finalPrice);
   finalPrice = finalPrice.toString();
   document.querySelector("#total").innerText = formatter.format(finalPrice);
 }
 
+//Formats the finalPrice answer into a currency format.
 var formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
