@@ -9,8 +9,10 @@ class Product {
   }
 }
 const basePrice = 2.49;
+let glazingIndex = 0;
+let packIndex = 0;
 
-let glazingSelect = [
+let glazingSelectArray = [
   {
     optionName: "Keep original",
     priceChange: 0.0,
@@ -47,33 +49,21 @@ let packSelectArray = [
     priceChange: 10,
   },
 ];
-// function displayOption(option) {
-//   console.log(option);
-//   let optionDisplay = document.querySelector("#Glazing-Options");
-//   console.log(optionDisplay);
-//   optionDisplay.innerText = option.optionName;
-// }
 
 function glazingValueChange() {
-  console.log(selectGlazing);
   console.log("You selected (glazing)" + selectGlazing.value);
 
-  let optionIndex = parseInt(selectGlazing.value);
+  glazingIndex = parseInt(selectGlazing.value);
 
-  let optionToDisplay = glazingSelect[optionIndex];
-
-  displayOption(optionToDisplay);
+  calculatePrice();
 }
 
 function packValueChange() {
-  console.log(packSelect);
   console.log("You selected (packValue)" + packSelect.value);
 
-  let optionIndex = parseInt(packSelect.value);
+  packIndex = parseInt(packSelect.value);
 
-  let optionToDisplay = packSelect[optionIndex];
-
-  displayOption(optionToDisplay);
+  calculatePrice();
 }
 
 let selectGlazing = document.querySelector("#Glazing-Options");
@@ -85,8 +75,8 @@ function createGlazingDropdown() {
   for (i = 0; i < 4; ++i) {
     //create an HTML element, choose from array of options using loop index, add to certain menu and display
     var option = document.createElement("option");
-    option.text = glazingSelect[i].optionName;
-    option.value = glazingSelect[i].priceChange;
+    option.text = glazingSelectArray[i].optionName;
+    option.value = i;
     selectGlazing.add(option);
   }
   selectGlazing.addEventListener("change", glazingValueChange);
@@ -96,9 +86,8 @@ function createPackDropdown() {
   for (i = 0; i < 4; ++i) {
     //create an HTML element, choose from array of options using loop index, add to certain menu and display
     var option = document.createElement("option");
-    console.log(option);
     option.text = packSelectArray[i].optionName;
-    option.value = packSelectArray[i].priceChange;
+    option.value = i;
     packSelect.add(option);
   }
   packSelect.addEventListener("change", packValueChange);
@@ -106,3 +95,23 @@ function createPackDropdown() {
 
 createGlazingDropdown();
 createPackDropdown();
+
+function calculatePrice() {
+  let finalPrice = basePrice;
+  let selectedGlaze = glazingSelectArray[glazingIndex];
+  let selectedPack = packSelectArray[packIndex];
+  console.log("selectedGlaze: " + selectedGlaze);
+  console.log("selectedPack " + selectedPack);
+
+  // for (i = 0; i < glazingSelect.length - 1; ++i) {
+  //   if (glazingSelect[i] == selectGlazing.value.priceChange) {
+  //     let glazingPrice = selectGlazing.value.priceChange;
+  //     console.log(glazingPrice);
+  //     if (packSelect[i] == packSelect.value.priceChange) {
+  //       let packPrice = packSelect.value.priceChange;
+  finalPrice = (basePrice + glazingPrice) * packPrice;
+  //     }
+  //   }
+  //
+  console.log("Price: " + finalPrice);
+}
