@@ -3,6 +3,7 @@
   <meta charset="UTF-8" />
   <title>Products</title>
   <head>
+    <script defer src="price.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/stylesheet.css" />
     <div class="container-0">
       <!--Bun Bun Bake Shop logo. When clicked, directs user back to gallery page-->
@@ -59,24 +60,17 @@
           <div id="dropdown_menus">
             <p>Glazing:</p>
             <div class="dropdown_content">
-              <select id="Glazing Options" onchange="onChange()">
-                <option value="0">Keep original</option>
-                <option value="1">Sugar milk</option>
-                <option value="2">Vanilla milk</option>
-                <option value="3">Double chocolate</option>
-              </select>
+              <select
+                id="Glazing-Options"
+                onchange="glazingValueChange()"
+              ></select>
             </div>
           </div>
           <!--Pack size dropdown menu-->
           <div class="dropdown">
             <p>Pack size:</p>
             <div class="dropdown_content">
-              <select id="Pack Size">
-                <option packvalue1="0" onchange="onChange()">1</option>
-                <option packvalue2="1" onchange="onChange()">3</option>
-                <option packvalue3="2" onchange="onChange()">6</option>
-                <option packvalue4="3" onchange="onChange()">12</option>
-              </select>
+              <select id="Pack-Size" onchange="packValueChange()"></select>
             </div>
           </div>
         </div>
@@ -86,6 +80,5 @@
         </div>
       </div>
     </div>
-    <script src="price.js" type="text/javascript"></script>
   </body>
 </html>
