@@ -1,30 +1,29 @@
+console.log(rolls);
 class Product {
   //class Product contains object with a price change to be applied to the base price as well as the name of the option.
-  rollType;
-  rollGlazing;
-  packSize;
-  basePrice;
-  imageURL;
 
-  constuctor(rollType, rollGlazing, packSize, basePrice) {
-    this.type = rollType;
-    this.glazing = rollGlazing;
-    this.size = packSize;
+  constructor(rollType, rollGlazing, packSize, basePrice, imageURL) {
+    this.rollType = rollType;
+    this.rollGlazing = rollGlazing;
+    this.packSize = packSize;
     this.basePrice = basePrice;
+    this.imageURL = imageURL;
   }
 
   updateElement() {
     let headerElement = document.querySelector(".product-subheading");
-    headerElement.innerText = this.type;
+    headerElement.innerHTML = this.rollType;
+    console.log("rolls: " + this.rollType);
 
-    let rollImage = document.querySelector(".productimg");
-    rollImage.src = "products/" + this.imageURL + ".png";
+    // let rollImage = document.querySelector(".productimg");
+    // rollImage.src = "products/" + this.imageURL + ".png";
+    // console.log(this.imageURL);
 
     let rollPrice = document.querySelector(".product-price");
-    rollPrice.innerText = this.basePrice;
+    rollPrice.innerHTML = this.basePrice;
   }
 }
-
+let currentProduct;
 //Global variables are defined here
 const basePrice = 2.49;
 //Default indexes for the glazing and pack inventories
@@ -141,4 +140,32 @@ function parseProducts() {
   console.log(params);
   const chosenRoll = params.get("roll");
   console.log(chosenRoll);
+
+  // let instanceProduct = new Product(
+  //   chosenRoll.rollType,
+  //   chosenRoll.rollGlazing,
+  //   chosenRoll.packSize,
+  //   chosenRoll.basePrice
+  // );
+  let instanceProduct;
+  for (item in rolls) {
+    if (chosenRoll == item) {
+      instanceProduct = new Product("cinnamon roll", "Vanilla", "3", basePrice);
+      // instanceProduct = item;
+      // console.log(item);
+      // console.log(item.basePrice);
+    }
+
+    // console.log(instanceProduct);
+  }
+  instanceProduct.updateElement();
 }
+
+parseProducts();
+
+//add to cart functionality
+
+// document.getElementById("add_to_cart").onclick = function {addToCart()};
+// function addToCart(){
+
+// }
