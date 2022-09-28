@@ -1,19 +1,37 @@
 class Product {
   //class Product contains object with a price change to be applied to the base price as well as the name of the option.
-  priceChange;
-  optionName;
+  rollType;
+  rollGlazing;
+  packSize;
+  basePrice;
+  imageURL;
 
-  constuctor(priceChange, optionName) {
-    this.priceChange = priceChange;
-    this.optionName = optionName;
+  constuctor(rollType, rollGlazing, packSize, basePrice) {
+    this.type = rollType;
+    this.glazing = rollGlazing;
+    this.size = packSize;
+    this.basePrice = basePrice;
+  }
+
+  updateElement() {
+    let headerElement = document.querySelector(".product-subheading");
+    headerElement.innerText = this.type;
+
+    let rollImage = document.querySelector(".productimg");
+    rollImage.src = "products/" + this.imageURL + ".png";
+
+    let rollPrice = document.querySelector(".product-price");
+    rollPrice.innerText = this.basePrice;
   }
 }
+
 //Global variables are defined here
 const basePrice = 2.49;
 //Default indexes for the glazing and pack inventories
 let glazingIndex = 0;
 let packIndex = 0;
-
+//Array of objects to be added/removed from cart.
+let cart = [];
 //Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
 let glazingArray = [
   {
@@ -115,3 +133,12 @@ var formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
+
+function parseProducts() {
+  const queryString = window.location.search;
+  console.log(queryString);
+  const params = new URLSearchParams(queryString);
+  console.log(params);
+  const chosenRoll = params.get("roll");
+  console.log(chosenRoll);
+}
