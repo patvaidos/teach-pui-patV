@@ -1,7 +1,8 @@
-console.log(rolls);
-class Product {
-  //class Product contains object with a price change to be applied to the base price as well as the name of the option.
-
+//This JS file contains functionality for changing the product on the product details page (product.html) and updating the cart.
+//Homework 3 and 4
+class Roll {
+  //class Roll contains the product name (rollType), the glazing option (rollGlazing), the pack size (packSize), the base price (basePrice),
+  //and the image URL directory (imageURL)
   constructor(rollType, rollGlazing, packSize, basePrice, imageURL) {
     this.rollType = rollType;
     this.rollGlazing = rollGlazing;
@@ -11,26 +12,29 @@ class Product {
   }
 
   updateElement() {
+    //This function updates the DOM with the chosen object's properties (name, image, and price)
     let headerElement = document.querySelector(".product-subheading");
-    headerElement.innerHTML = this.rollType;
-    console.log("rolls: " + this.rollType);
+    headerElement.innerHTML = this.rollType + " Cinnamon Roll";
 
-    // let rollImage = document.querySelector(".productimg");
-    // rollImage.src = "products/" + this.imageURL + ".png";
-    // console.log(this.imageURL);
+    let rollImage = document.querySelector(".productimg");
+    rollImage.src = "products/" + this.imageURL;
+    console.log(this.imageURL);
 
-    let rollPrice = document.querySelector(".product-price");
+    let rollPrice = document.querySelector("#total");
     rollPrice.innerHTML = this.basePrice;
   }
 }
-let currentProduct;
 //Global variables are defined here
+let currentProduct;
 const basePrice = 2.49;
+
 //Default indexes for the glazing and pack inventories
 let glazingIndex = 0;
 let packIndex = 0;
+
 //Array of objects to be added/removed from cart.
 let cart = [];
+
 //Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
 let glazingArray = [
   {
@@ -69,6 +73,10 @@ let packArray = [
     priceChange: 10,
   },
 ];
+
+//Logic for adjusting price based on Glazing and Pack size choice. User can click on the glazing and pack size options for their order
+//using the dropdown menu and the price will update based on choice.
+
 //Variables store the selected HTML element for glazing and pack size respectfully.
 let selectGlazing = document.querySelector("#Glazing-Options");
 let packSelect = document.querySelector("#Pack-Size");
@@ -113,9 +121,6 @@ function createPackDropdown() {
   packSelect.addEventListener("change", packValueChange);
 }
 
-createGlazingDropdown();
-createPackDropdown();
-
 function calculatePrice(glazing, pack) {
   //Calculates the final price of the purchase by using a price formula with variables from the glazing & pack size arrays.
   let finalPrice = basePrice;
@@ -133,7 +138,14 @@ var formatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
+//Function calls for dynamically populating the dropdown menus
+createGlazingDropdown();
+createPackDropdown();
+
+//Here is the code for updating the DOM elements to match the user choice from the gallery menu.
 function parseProducts() {
+  //Function that takes user input from Gallery page and creates a new Roll object and check choice against rollsData.js.
+  //Defines the currentProduct global variable to remember choice for adding to cart.
   const queryString = window.location.search;
   console.log(queryString);
   const params = new URLSearchParams(queryString);
@@ -141,31 +153,30 @@ function parseProducts() {
   const chosenRoll = params.get("roll");
   console.log(chosenRoll);
 
-  // let instanceProduct = new Product(
-  //   chosenRoll.rollType,
-  //   chosenRoll.rollGlazing,
-  //   chosenRoll.packSize,
-  //   chosenRoll.basePrice
-  // );
   let instanceProduct;
-  for (item in rolls) {
-    if (chosenRoll == item) {
-      instanceProduct = new Product("cinnamon roll", "Vanilla", "3", basePrice);
-      // instanceProduct = item;
-      // console.log(item);
-      // console.log(item.basePrice);
-    }
-
-    // console.log(instanceProduct);
-  }
+  rolls[chosenRoll];
+  instanceProduct = new Roll(
+    chosenRoll,
+    selectGlazing,
+    packSelect,
+    rolls[chosenRoll].basePrice,
+    rolls[chosenRoll].imageFile
+  );
   instanceProduct.updateElement();
+  currentProduct = instanceProduct;
 }
 
+//Function call to parse products.
 parseProducts();
 
-//add to cart functionality
+//Add to cart element
+let cartElement = document.getElementById("add_to_cart");
 
-// document.getElementById("add_to_cart").onclick = function {addToCart()};
-// function addToCart(){
+function addToCart() {
+  //Adds the current product to the global cart array
+  cart.push(currentProduct);
+  console.log(cart);
+}
 
-// }
+//Add to cart event handler.
+cartElement.onclick = addToCart;
