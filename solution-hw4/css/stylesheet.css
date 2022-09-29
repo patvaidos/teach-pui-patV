@@ -33,35 +33,36 @@ h6 {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: normal;
 }
+
 p {
   font-size: 22;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: normal;
 }
+
 .center {
   margin: auto;
   text-align: center;
-  /* width: 200px; */
   border: 5px solid #0000;
   border-style: solid none none none;
   padding: 0%;
 }
+
 .center_body {
-  /* margin: auto; */
   margin-top: 2%;
   text-align: center;
-  /* width: 50; */
   border: 0px;
   padding: 3%;
 }
+
 .center_text {
-  /* margin-left: 255px; */
   margin: auto;
   text-align: left;
   width: 200px;
   padding: 0%;
 }
+
 .productimg {
   margin: auto;
   border: 3px solid #000;
@@ -114,10 +115,6 @@ button {
   font-size: 20;
   cursor: pointer;
   width: 200px;
-  /* padding-right: 40px;
-  padding-left: 5px;
-  padding-bottom: 3px;
-  padding-top: 3px; */
 }
 
 .dropdown_content {
@@ -148,6 +145,7 @@ button {
   background-color: yellow;
   width: fit-content;
 }
+
 select {
   width: 200px;
   padding-left: 10px;
@@ -162,9 +160,7 @@ select {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 40px;
-  /* height: 400px; */
   padding-top: 30px;
-  /* padding-bottom: 50px; */
 }
 
 .subcontainer-0 {
@@ -197,7 +193,6 @@ select {
 }
 
 .nav-element {
-  /* display: flex; */
   flex-basis: auto;
   flex-direction: row;
 }
@@ -206,10 +201,8 @@ select {
   display: flex;
   border: 75px;
   order: 3;
-  /* flex-grow: 3; */
   justify-content: flex-start;
   flex-direction: row;
-  /* align-items: center; */
   padding-top: 30px;
   border-top: 5px solid black;
   width: 800px;
@@ -218,7 +211,6 @@ select {
 .container-1 {
   display: flex;
   flex-flow: row wrap;
-  /* align-content: center; */
   justify-content: space-evenly;
   width: 100%;
   gap: 50px;
@@ -249,32 +241,24 @@ select {
 }
 
 .child-1 {
-  /* align-items: flex-start; */
   flex-basis: auto;
   flex-direction: column;
-  /* align-content: ; */
-  /* flex-grow: 3; */
 }
+
 .child-2 {
   flex-basis: auto;
   flex-direction: column;
 }
+
 .child-3 {
   flex-basis: auto;
   flex-direction: column;
 }
+
 .child-4 {
   flex-basis: auto;
   flex-direction: column;
 }
-/* .child-5 {
-  flex-basis: auto;
-  flex-direction: column;
-}
-.child-6 {
-  flex-basis: auto;
-  flex-direction: column;
-} */
 
 .container-2 {
   display: flex;
@@ -283,13 +267,12 @@ select {
   justify-content: center;
   gap: 40px;
 }
+
 .child-2-1 {
-  /* display: flex; */
   flex-basis: auto;
-  /* flex-direction: column; */
 }
+
 .child-2-2 {
-  /* display: flex; */
   flex-basis: auto;
   flex-direction: column;
 }
@@ -311,17 +294,11 @@ select {
   flex-wrap: nowrap;
   flex-direction: column;
   padding-left: 300px;
-  /* margin-right: 50px; */
 }
-/* 
-.empty-container {
-  order: 0;
-  flex-grow: 3;
-} */
+
 .child-3-1 {
   display: flex;
   flex-wrap: wrap;
-  /* order: 1; */
   flex-direction: row;
   gap: 30px;
   justify-content: space-around;
@@ -332,7 +309,6 @@ select {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  /* order: 2; */
   flex-direction: row;
   padding-bottom: 10px;
   border-bottom: 5px solid black;
@@ -347,14 +323,16 @@ select {
   padding-left: 110px;
   padding-right: 30px;
 }
+
 .grandchild-3-1 {
   flex-basis: auto;
 }
+
 .grandchild-3-2 {
   flex-grow: 2;
 }
+
 .grandchild-3-3 {
-  /* display: flex; */
   flex-basis: auto;
   flex-direction: row;
   flex-wrap: wrap;
@@ -366,6 +344,7 @@ select {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
 .child-4-1 {
   flex-basis: auto;
 }
@@ -373,19 +352,3 @@ select {
 .child-4-2 {
   flex-basis: auto;
 }
-/* .child-3-4 {
-}
-.child-3-5 {
-}
-.child-3-6 {
-} */
-/* .child-2-3 {
-  display: flex;
-  flex-basis: auto;
-  flex-direction: column;
-}
-.child-2-4 {
-  display: flex;
-  flex-basis: auto;
-  flex-direction: column;
-} */
