@@ -14,12 +14,11 @@ class Roll {
 
   updateElement() {
     //This function updates the DOM with the chosen object's properties (name, image, and price)
-    let headerElement = document.querySelector(".product-subheading");
+    let headerElement = document.querySelector(".product-subheading h2");
     headerElement.innerHTML = this.rollType + " Cinnamon Roll";
 
     let rollImage = document.querySelector(".productimg");
     rollImage.src = "products/" + this.imageURL;
-    console.log(this.imageURL);
 
     let rollPrice = document.querySelector("#total");
     rollPrice.innerHTML = this.basePrice;
@@ -85,7 +84,6 @@ let packSelect = document.querySelector("#Pack-Size");
 
 function glazingValueChange() {
   //Takes the glazing value from HTML element and calculates the index to retrieve the value. Calculates price from index.
-  console.log("You selected (glazing)" + selectGlazing.value);
 
   glazingIndex = parseInt(selectGlazing.value);
 
@@ -94,7 +92,6 @@ function glazingValueChange() {
 
 function packValueChange() {
   //Takes the pack value from HTML element and calculates the index to retrieve the value. Calculates price from index.
-  console.log("You selected (packValue)" + packSelect.value);
 
   packIndex = parseInt(packSelect.value);
 
@@ -129,7 +126,6 @@ function calculatePrice(glazing, pack) {
   let selectedGlaze = glazingArray[glazingIndex].priceChange;
   let selectedPack = packArray[packIndex].priceChange;
   finalPrice = (basePrice + selectedGlaze) * selectedPack;
-  console.log(finalPrice);
   finalPrice = finalPrice.toString();
   document.querySelector("#total").innerText = formatter.format(finalPrice);
 }
@@ -149,11 +145,8 @@ function parseProducts() {
   //Function that takes user input from Gallery page and creates a new Roll object and check choice against rollsData.js.
   //Defines the currentProduct global variable to remember choice for adding to cart.
   const queryString = window.location.search;
-  console.log(queryString);
   const params = new URLSearchParams(queryString);
-  console.log(params);
   const chosenRoll = params.get("roll");
-  console.log(chosenRoll);
 
   let instanceProduct;
   rolls[chosenRoll];
