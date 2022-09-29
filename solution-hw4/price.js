@@ -1,7 +1,8 @@
 //This JS file contains functionality for changing the product on the product details page (product.html) and updating the cart.
 //Homework 3 and 4
+
 class Roll {
-  //class Roll contains the product name (rollType), the glazing option (rollGlazing), the pack size (packSize), the base price (basePrice),
+  //The class Roll contains the product name (rollType), the glazing option (rollGlazing), the pack size (packSize), the base price (basePrice),
   //and the image URL directory (imageURL)
   constructor(rollType, rollGlazing, packSize, basePrice, imageURL) {
     this.rollType = rollType;
@@ -24,6 +25,7 @@ class Roll {
     rollPrice.innerHTML = this.basePrice;
   }
 }
+
 //Global variables are defined here
 let currentProduct;
 const basePrice = 2.49;
@@ -74,8 +76,8 @@ let packArray = [
   },
 ];
 
-//Logic for adjusting price based on Glazing and Pack size choice. User can click on the glazing and pack size options for their order
-//using the dropdown menu and the price will update based on choice.
+//-----------------Logic for adjusting price based on Glazing and Pack size choice. User can click on the-----------------------------------
+//-------glazing and pack size options for their order using the dropdown menu and the price will update based on choice.--------------------
 
 //Variables store the selected HTML element for glazing and pack size respectfully.
 let selectGlazing = document.querySelector("#Glazing-Options");
@@ -142,7 +144,7 @@ var formatter = new Intl.NumberFormat("en-US", {
 createGlazingDropdown();
 createPackDropdown();
 
-//Here is the code for updating the DOM elements to match the user choice from the gallery menu.
+//------------------Here is the code for updating the DOM elements to match the user choice from the gallery menu.------------------------------
 function parseProducts() {
   //Function that takes user input from Gallery page and creates a new Roll object and check choice against rollsData.js.
   //Defines the currentProduct global variable to remember choice for adding to cart.
