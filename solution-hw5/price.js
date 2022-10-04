@@ -21,7 +21,35 @@ class Roll {
     rollImage.src = "products/" + this.imageURL;
 
     let rollPrice = document.querySelector("#total");
-    rollPrice.innerHTML = this.basePrice;
+    rollPrice.innerHTML = "$" + this.basePrice;
+  }
+
+  populateCart(deleteFunction) {
+    console.log("Adding item");
+    let template = document.querySelector(".cart-item-template");
+    let clone = template.content.cloneNode(true);
+    this.element = clone.querySelector(".cart-item");
+
+    let container = document.querySelector("#container-3");
+    container.prepend(this.element);
+
+    let image = document.querySelector(".productimg");
+    image.src = "products/" + this.imageURL;
+
+    let name = document.querySelector("title");
+    name.innerHTML = this.rollType + " Cinnamon Roll";
+
+    let price = document.querySelector(".price");
+    price.innerHTML = currentProduct.basePrice;
+
+    let glazing = document.querySelector(".glazing");
+    glazing = this.rollGlazing;
+
+    let packsize = document.querySelector(".packSize");
+    packsize = this.packSize;
+
+    let deleteButton = this.element.querySelector(".remove-button");
+    deleteButton.addEventListener("click", deleteFunction);
   }
 }
 
@@ -192,11 +220,26 @@ parseProducts();
 //Add to cart element
 let cartElement = document.getElementById("add_to_cart");
 
-function addToCart() {
+function addToCart(roll) {
   //Adds the current product to the global cart array
+  roll.populateCart(deleteItem);
   cart.push(currentProduct);
   console.log(cart);
 }
 
 //Add to cart event handler.
 cartElement.onclick = addToCart;
+
+//Populate cart page with selected items.
+
+function deleteItem(item) {
+  //Deletes item from cart
+  item.removeElement();
+  cart.delete(item);
+}
+
+function sampleCartFill() {
+  for (item in cart) {
+    addToCart(item);
+  }
+}
