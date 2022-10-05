@@ -4,6 +4,12 @@
 class Roll {
   //The class Roll contains the product name (rollType), the glazing option (rollGlazing), the pack size (packSize), the base price (basePrice),
   //and the image URL directory (imageURL)
+  rollType;
+  rollGlazing;
+  packSize;
+  basePrice;
+  imageURL;
+
   constructor(rollType, rollGlazing, packSize, basePrice, imageURL) {
     this.rollType = rollType;
     this.rollGlazing = rollGlazing;
@@ -68,19 +74,19 @@ let cart = [];
 
 //Populating cart with Roll items below
 
-let original = new Roll("Original", "Sugar Milk", 1, 2.49);
-cart.push(original);
+// let original = new Roll("Original", "Sugar Milk", 1, 2.49);
+// cart.push(original);
 
-let walnut = new Roll("Walnut", "Vanilla Milk", 12, 39.9);
-cart.push(walnut);
+// let walnut = new Roll("Walnut", "Vanilla Milk", 12, 39.9);
+// cart.push(walnut);
 
-let raisin = new Roll("Raisin", "Sugar Milk", 3, 8.97);
-cart.push(raisin);
+// let raisin = new Roll("Raisin", "Sugar Milk", 3, 8.97);
+// cart.push(raisin);
 
-let apple = new Roll("Apple", "Original", 3, 10.47);
-cart.push(walnut);
+// let apple = new Roll("Apple", "Original", 3, 10.47);
+// cart.push(walnut);
 
-console.log(cart);
+// console.log(cart);
 
 //Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
 let glazingArray = [
@@ -217,29 +223,29 @@ function parseProducts() {
 //Function call to parse products.
 parseProducts();
 
-//Add to cart element
+// //Add to cart element
 let cartElement = document.getElementById("add_to_cart");
 
-function addToCart(roll) {
-  //Adds the current product to the global cart array
-  roll.populateCart(deleteItem);
-  cart.push(currentProduct);
-  console.log(cart);
-}
+// function addToCart(roll) {
+//   //Adds the current product to the global cart array
+//   roll.populateCart(deleteItem);
+//   cart.push(currentProduct);
+//   console.log(cart);
+// }
 
-//Add to cart event handler.
-cartElement.onclick = addToCart;
+// //Add to cart event handler.
+// cartElement.onclick = addToCart;
 
-//Populate cart page with selected items.
+// //Populate cart page with selected items.
 
-function deleteItem(item) {
-  //Deletes item from cart
-  item.removeElement();
-  cart.delete(item);
-}
+// function deleteItem(item) {
+//   //Deletes item from cart
+//   item.removeElement();
+//   cart.delete(item);
+// }
 
-function sampleCartFill() {
-  for (item in cart) {
-    addToCart(item);
-  }
-}
+// function sampleCartFill() {
+//   for (item in cart) {
+//     addToCart(item);
+//   }
+// }
