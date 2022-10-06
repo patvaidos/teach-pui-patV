@@ -1,3 +1,16 @@
+const glazingMap = {
+  Original: 0,
+  "Sugar milk": 0,
+  "Vanilla milk": 0.5,
+  "Double chocolate": 1.5,
+};
+
+const packMap = {
+  1: 1,
+  3: 3,
+  6: 5,
+  12: 10,
+};
 class CartItem {
   rollType;
   rollGlazing;
@@ -12,6 +25,15 @@ class CartItem {
     this.packSize = packSize;
     this.basePrice = basePrice;
     this.imageURL = imageURL;
+
+    this.calculatedPrice = calculatePrice(
+      this.basePrice,
+      glazingMap[this.rollGlazing],
+      packMap[this.packSize]
+    );
+    console.log("glazing:" + glazingMap[this.rollGlazing]);
+    console.log("pack:" + packMap[this.packSize]);
+    console.log(this.calculatedPrice);
   }
 
   populateCart(deleteFunction) {
@@ -58,7 +80,7 @@ let cart = new Set();
 //Populate cart with items
 let original = new CartItem(
   "Original",
-  "Sugar Milk",
+  "Sugar milk",
   1,
   2.49,
   "products/original-cinnamon-roll.jpg"
@@ -67,18 +89,18 @@ cart.add(original);
 
 let walnut = new CartItem(
   "Walnut",
-  "Vanilla Milk",
+  "Vanilla milk",
   12,
-  39.9,
+  3.49,
   "products/walnut-cinnamon-roll.jpg"
 );
 cart.add(walnut);
 
 let raisin = new CartItem(
   "Raisin",
-  "Sugar Milk",
+  "Sugar milk",
   3,
-  8.97,
+  2.99,
   "products/raisin-cinnamon-roll.jpg"
 );
 cart.add(raisin);
@@ -87,7 +109,7 @@ let apple = new CartItem(
   "Apple",
   "Original",
   3,
-  10.47,
+  3.49,
   "products/apple-cinnamon-roll.jpg"
 );
 cart.add(apple);
@@ -125,6 +147,10 @@ function updateTotal() {
   console.log("total: " + total);
   let price = document.querySelector("#total");
   price.innerHTML = total;
+}
+
+function calculatePrice(basePrice, glazingPrice, packPrice) {
+  return (basePrice + glazingPrice) * packPrice;
 }
 
 sampleCartFill();
