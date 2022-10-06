@@ -1,3 +1,5 @@
+//This file manages all the functionality for
+//Map of glazing names and price changes
 const glazingMap = {
   Original: 0,
   "Sugar milk": 0,
@@ -5,12 +7,15 @@ const glazingMap = {
   "Double chocolate": 1.5,
 };
 
+//Map of pack sizes and price changes
 const packMap = {
   1: 1,
   3: 3,
   6: 5,
   12: 10,
 };
+
+//Class definition for products added to the cart.
 class CartItem {
   rollType;
   rollGlazing;
@@ -26,17 +31,16 @@ class CartItem {
     this.basePrice = basePrice;
     this.imageURL = imageURL;
 
+    //This calls the calculatePrice() function later in the document and uses the mapped glazing and pack size price changes
     this.calculatedPrice = calculatePrice(
       this.basePrice,
       glazingMap[this.rollGlazing],
       packMap[this.packSize]
     );
-    console.log("glazing:" + glazingMap[this.rollGlazing]);
-    console.log("pack:" + packMap[this.packSize]);
-    console.log(this.calculatedPrice);
   }
 
-  populateCart(deleteFunction) {
+  createElement(deleteFunction) {
+    //Copies the template from the HTML page to create HTML elements on the page.
     console.log("Adding item");
     let template = document.querySelector("#cart-item-template");
     console.log(template);
@@ -56,6 +60,7 @@ class CartItem {
   }
 
   updateCart() {
+    //Updates the elements on the page to reflect roll item information
     let image = document.querySelector(".productimg");
     console.log(image);
     image.src = this.imageURL;
@@ -64,7 +69,7 @@ class CartItem {
     name.innerHTML = this.rollType + " Cinnamon Roll";
 
     let price = document.querySelector("#price");
-    price.innerHTML = this.basePrice;
+    price.innerHTML = formatter.format(this.calculatedPrice);
 
     let glazing = document.querySelector("#glazing");
     glazing.innerHTML = this.rollGlazing;
@@ -74,7 +79,7 @@ class CartItem {
   }
 }
 
-//Cart Array
+//Cart Set
 let cart = new Set();
 
 //Populate cart with items
@@ -114,17 +119,14 @@ let apple = new CartItem(
 );
 cart.add(apple);
 
-console.log(cart);
-
 function addToCart(roll) {
   //Adds the current product to the global cart array
-  console.log("add to cart function passed");
-  roll.populateCart(deleteItem);
+  console.log("Add to cart function passed");
+  roll.createElement(deleteItem);
 }
 
 function deleteItem(item) {
   //Deletes item from cart
-  //   item.remove();
   item.element.remove();
   cart.delete(item);
 }
@@ -132,26 +134,32 @@ function deleteItem(item) {
 function sampleCartFill() {
   //Function to populate cart
   for (let item of cart) {
-    item.populateCart(() => {
+    item.createElement(() => {
       deleteItem(item);
     });
   }
 }
 
 function updateTotal() {
+  //Updates the total price listed on the page.
   let total = 0;
   for (let item of cart) {
-    console.log("item: " + item);
-    total = total + item.basePrice;
+    total = total + item.calculatedPrice;
   }
-  console.log("total: " + total);
   let price = document.querySelector("#total");
-  price.innerHTML = total;
+  price.innerHTML = formatter.format(total);
 }
 
 function calculatePrice(basePrice, glazingPrice, packPrice) {
+  //Calculates the total price of the products.
   return (basePrice + glazingPrice) * packPrice;
 }
+
+//Formats the finalPrice answer into a currency format.
+var formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 
 sampleCartFill();
 updateTotal();

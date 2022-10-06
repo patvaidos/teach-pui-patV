@@ -30,40 +30,6 @@ class Roll {
     let rollPrice = document.querySelector("#total");
     rollPrice.innerHTML = "$" + this.basePrice;
   }
-
-  // populateCart(deleteFunction) {
-  //   console.log("Adding item");
-  //   let template = document.querySelector("#cart-item-template");
-  //   console.log(template);
-  //   let clone = template.content.cloneNode(true);
-  //   this.element = clone.querySelector(".child-3-1");
-  //   console.log("this.element: " + this.element);
-
-  //   let container = document.querySelector(".container-3");
-  //   container.prepend(this.element);
-
-  //   let deleteButton = this.element.querySelector("#remove-button");
-  //   deleteButton.addEventListener("click", deleteFunction());
-
-  //   this.updateCart();
-  // }
-  // updateCart() {
-  //   let image = document.querySelector(".productimg");
-  //   console.log(image);
-  //   image.src = this.imageURL;
-
-  //   let name = document.querySelector("#title");
-  //   name.innerHTML = this.rollType + " Cinnamon Roll";
-
-  //   let price = document.querySelector("#price");
-  //   price.innerHTML = this.basePrice;
-
-  //   let glazing = document.querySelector("#glazing");
-  //   glazing = this.rollGlazing;
-
-  //   let packsize = document.querySelector("#packSize");
-  //   packsize = this.packSize;
-  // }
 }
 
 //Global variables are defined here
@@ -78,22 +44,6 @@ let packIndex = 0;
 
 //Array of objects to be added/removed from cart.
 let cart = [];
-
-//Populating cart with Roll items below
-
-// let original = new Roll("Original", "Sugar Milk", 1, 2.49);
-// cart.push(original);
-
-// let walnut = new Roll("Walnut", "Vanilla Milk", 12, 39.9);
-// cart.push(walnut);
-
-// let raisin = new Roll("Raisin", "Sugar Milk", 3, 8.97);
-// cart.push(raisin);
-
-// let apple = new Roll("Apple", "Original", 3, 10.47);
-// cart.push(walnut);
-
-// console.log(cart);
 
 //Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
 let glazingArray = [
@@ -185,12 +135,8 @@ function calculatePrice(glazing, pack) {
   //Calculates the final price of the purchase by using a price formula with variables from the glazing & pack size arrays.
   let finalPrice = currentProduct.basePrice;
   let selectedGlaze = glazingArray[glazingIndex].priceChange;
-  console.log("basePrice variable: " + currentProduct.basePrice);
-  console.log("Selected glaze price: " + selectedGlaze);
   let selectedPack = packArray[packIndex].priceChange;
-  console.log("Selected pack size price: " + selectedPack);
   finalPrice = (currentProduct.basePrice + selectedGlaze) * selectedPack;
-  console.log("Total: " + finalPrice);
   finalPrice = finalPrice.toString();
   document.querySelector("#total").innerText = formatter.format(finalPrice);
 }
@@ -232,29 +178,3 @@ parseProducts();
 
 // //Add to cart element
 let cartElement = document.getElementById("add_to_cart");
-
-// function addToCart(roll) {
-//   //Adds the current product to the global cart array
-//   roll.populateCart(deleteItem);
-//   cart.push(currentProduct);
-//   console.log(cart);
-// }
-
-// //Add to cart event handler.
-// cartElement.onclick = addToCart;
-
-// //Populate cart page with selected items.
-
-// function deleteItem(item) {
-//   //Deletes item from cart
-//   item.removeElement();
-//   cart.delete(item);
-// }
-
-// function sampleCartFill() {
-//   for (item in cart) {
-//     addToCart(item);
-//   }
-// }
-
-//Populate cart with items
