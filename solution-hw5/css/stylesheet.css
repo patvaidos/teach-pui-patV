@@ -107,7 +107,11 @@ button {
   width: max-content;
   font-weight: bold;
 }
-
+.remove-button {
+  font-size: 8;
+  border-style: none none none none;
+  background-color: white;
+}
 .dropdown {
   border: 5px #000;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
@@ -351,4 +355,16 @@ select {
 
 .child-4-2 {
   flex-basis: auto;
+}
+
+#total {
+  font-size: 40;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: normal;
+}
+
+#cart-line {
+  background-color: black;
+  size: 5px;
 }

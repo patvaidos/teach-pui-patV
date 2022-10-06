@@ -25,27 +25,14 @@ class CartItem {
     let container = document.querySelector(".container-3");
     container.prepend(this.element);
 
-    // let image = document.querySelector("#productimg");
-    // console.log(image);
-    // image.src = this.imageURL;
-
-    // let name = document.querySelector("title");
-    // name.innerHTML = this.rollType + " Cinnamon Roll";
-
-    // let price = document.querySelector(".price");
-    // price.innerHTML = currentProduct.basePrice;
-
-    // let glazing = document.querySelector(".glazing");
-    // glazing = this.rollGlazing;
-
-    // let packsize = document.querySelector(".packSize");
-    // packsize = this.packSize;
-
-    let deleteButton = this.element.querySelector("#remove-button");
-    deleteButton.addEventListener("click", deleteFunction);
+    let deleteButton = this.element.querySelector(".remove-button");
+    deleteButton.addEventListener("click", () => {
+      deleteFunction(".child-3-1");
+    });
 
     this.updateCart();
   }
+
   updateCart() {
     let image = document.querySelector(".productimg");
     console.log(image);
@@ -58,15 +45,15 @@ class CartItem {
     price.innerHTML = this.basePrice;
 
     let glazing = document.querySelector("#glazing");
-    glazing = this.rollGlazing;
+    glazing.innerHTML = this.rollGlazing;
 
     let packsize = document.querySelector("#packSize");
-    packsize = this.packSize;
+    packsize.innerHTML = "Pack Size: " + this.packSize;
   }
 }
 
 //Cart Array
-let cart = [];
+let cart = new Set();
 
 //Populate cart with items
 let original = new CartItem(
@@ -76,7 +63,7 @@ let original = new CartItem(
   2.49,
   "products/original-cinnamon-roll.jpg"
 );
-cart.push(original);
+cart.add(original);
 
 let walnut = new CartItem(
   "Walnut",
@@ -85,7 +72,7 @@ let walnut = new CartItem(
   39.9,
   "products/walnut-cinnamon-roll.jpg"
 );
-cart.push(walnut);
+cart.add(walnut);
 
 let raisin = new CartItem(
   "Raisin",
@@ -94,7 +81,7 @@ let raisin = new CartItem(
   8.97,
   "products/raisin-cinnamon-roll.jpg"
 );
-cart.push(raisin);
+cart.add(raisin);
 
 let apple = new CartItem(
   "Apple",
@@ -103,33 +90,42 @@ let apple = new CartItem(
   10.47,
   "products/apple-cinnamon-roll.jpg"
 );
-cart.push(apple);
+cart.add(apple);
 
 console.log(cart);
 
-//Add to cart element
-// let cartElement = document.getElementById("add_to_cart");
-
-// //Add to cart event handler.
-// cartElement.onclick = addToCart;
-
 function addToCart(roll) {
   //Adds the current product to the global cart array
+  console.log("add to cart function passed");
   roll.populateCart(deleteItem);
-  //   cart.push();
-  console.log(cart);
 }
 
 function deleteItem(item) {
   //Deletes item from cart
-  item.removeElement();
+  //   item.remove();
+  item.element.remove();
   cart.delete(item);
 }
 
 function sampleCartFill() {
   //Function to populate cart
   for (let item of cart) {
-    addToCart(item);
+    item.populateCart(() => {
+      deleteItem(item);
+    });
   }
 }
+
+function updateTotal() {
+  let total = 0;
+  for (let item of cart) {
+    console.log("item: " + item);
+    total = total + item.basePrice;
+  }
+  console.log("total: " + total);
+  let price = document.querySelector("#total");
+  price.innerHTML = total;
+}
+
 sampleCartFill();
+updateTotal();

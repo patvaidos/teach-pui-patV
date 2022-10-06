@@ -9,6 +9,7 @@ class Roll {
   packSize;
   basePrice;
   imageURL;
+  calculatedPrice;
 
   constructor(rollType, rollGlazing, packSize, basePrice, imageURL) {
     this.rollType = rollType;
@@ -30,33 +31,39 @@ class Roll {
     rollPrice.innerHTML = "$" + this.basePrice;
   }
 
-  populateCart(deleteFunction) {
-    console.log("Adding item");
-    let template = document.querySelector(".cart-item-template");
-    let clone = template.content.cloneNode(true);
-    this.element = clone.querySelector(".cart-item");
+  // populateCart(deleteFunction) {
+  //   console.log("Adding item");
+  //   let template = document.querySelector("#cart-item-template");
+  //   console.log(template);
+  //   let clone = template.content.cloneNode(true);
+  //   this.element = clone.querySelector(".child-3-1");
+  //   console.log("this.element: " + this.element);
 
-    let container = document.querySelector("#container-3");
-    container.prepend(this.element);
+  //   let container = document.querySelector(".container-3");
+  //   container.prepend(this.element);
 
-    let image = document.querySelector(".productimg");
-    image.src = "products/" + this.imageURL;
+  //   let deleteButton = this.element.querySelector("#remove-button");
+  //   deleteButton.addEventListener("click", deleteFunction());
 
-    let name = document.querySelector("title");
-    name.innerHTML = this.rollType + " Cinnamon Roll";
+  //   this.updateCart();
+  // }
+  // updateCart() {
+  //   let image = document.querySelector(".productimg");
+  //   console.log(image);
+  //   image.src = this.imageURL;
 
-    let price = document.querySelector(".price");
-    price.innerHTML = currentProduct.basePrice;
+  //   let name = document.querySelector("#title");
+  //   name.innerHTML = this.rollType + " Cinnamon Roll";
 
-    let glazing = document.querySelector(".glazing");
-    glazing = this.rollGlazing;
+  //   let price = document.querySelector("#price");
+  //   price.innerHTML = this.basePrice;
 
-    let packsize = document.querySelector(".packSize");
-    packsize = this.packSize;
+  //   let glazing = document.querySelector("#glazing");
+  //   glazing = this.rollGlazing;
 
-    let deleteButton = this.element.querySelector(".remove-button");
-    deleteButton.addEventListener("click", deleteFunction);
-  }
+  //   let packsize = document.querySelector("#packSize");
+  //   packsize = this.packSize;
+  // }
 }
 
 //Global variables are defined here
@@ -249,3 +256,5 @@ let cartElement = document.getElementById("add_to_cart");
 //     addToCart(item);
 //   }
 // }
+
+//Populate cart with items
