@@ -82,7 +82,7 @@ class CartItem {
 }
 
 //Cart Set
-// let cart = new Set();
+let cart = new Set();
 
 //Populate cart with items
 // let original = new CartItem(
@@ -121,12 +121,23 @@ class CartItem {
 // );
 // cart.add(apple);
 
-function addToCart(roll) {
+function addToCart() {
   //Adds the current product to the global cart array
   console.log("Add to cart function passed");
-  roll.createElement(deleteItem);
-  // cart.add(roll);
+  const item = addNewItem();
   saveToLocalStorage();
+}
+
+function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
+  const item = new CartItem(
+    rollType,
+    rollGlazing,
+    packSize,
+    basePrice,
+    imageURL
+  );
+  cart.add(item);
+  return item;
 }
 
 function deleteItem(item) {
@@ -167,9 +178,37 @@ var formatter = new Intl.NumberFormat("en-US", {
 });
 
 // cartFill();
-updateTotal();
 
 //Homework 6 Local Storage
+
+function submitItem() {
+  const itemImage = document.querySelector(".productimg");
+  console.log(image);
+  const editorImgURL = itemImage.src;
+
+  const itemName = document.querySelector("#title");
+  const editorName = itemName.value;
+
+  const itemPrice = document.querySelector("#price");
+  itemPrice.innerHTML = formatter.format(this.calculatedPrice);
+  const editorPrice = itemPrice.value;
+
+  const itemGlazing = document.querySelector("#glazing");
+  const editorGlazing = itemGlazing.value();
+
+  const itemPackSize = document.querySelector("#packSize");
+  const editorPackSize = itemPackSize.value();
+
+  const cartItem = addNewItem(
+    editorName,
+    editorGlazing,
+    editorPackSize,
+    editorPrice,
+    editorImgURL
+  );
+
+  saveToLocalStorage();
+}
 
 function saveToLocalStorage() {
   const cartArray = Array.from(cart);
@@ -184,7 +223,13 @@ function retrieveFromLocalStorage() {
   const cartArrayString = localStorage.getItem("storedItems");
   const cartArray = JSON.parse(cartArrayString);
   for (const cartData of cartArray) {
-    const cart = addToCart(cartData);
+    const cart = addNewItem(
+      cartData.rollType,
+      cartData.rollGlazing,
+      cartData.packSize,
+      cartData.basePrice,
+      cartData.imageURL
+    );
     createElement(cart);
   }
 }
@@ -192,3 +237,5 @@ function retrieveFromLocalStorage() {
 if (localStorage.getItem("storedItems") != null) {
   retrieveFromLocalStorage();
 }
+
+updateTotal();
