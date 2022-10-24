@@ -82,51 +82,14 @@ class CartItem {
 }
 
 //Cart Set
-let cart = new Set();
-
-//Populate cart with items
-// let original = new CartItem(
-//   "Original",
-//   "Sugar milk",
-//   1,
-//   2.49,
-//   "products/original-cinnamon-roll.jpg"
-// );
-// cart.add(original);
-
-// let walnut = new CartItem(
-//   "Walnut",
-//   "Vanilla milk",
-//   12,
-//   3.49,
-//   "products/walnut-cinnamon-roll.jpg"
-// );
-// cart.add(walnut);
-
-// let raisin = new CartItem(
-//   "Raisin",
-//   "Sugar milk",
-//   3,
-//   2.99,
-//   "products/raisin-cinnamon-roll.jpg"
-// );
-// cart.add(raisin);
-
-// let apple = new CartItem(
-//   "Apple",
-//   "Original",
-//   3,
-//   3.49,
-//   "products/apple-cinnamon-roll.jpg"
-// );
-// cart.add(apple);
-
-function addToCart() {
-  //Adds the current product to the global cart array
-  console.log("Add to cart function passed");
-  const item = addNewItem();
-  saveToLocalStorage();
-}
+let cartSet = new Set();
+console.log(cartSet);
+// function addToCart() {
+//   //Adds the current product to the global cart array
+//   console.log("Add to cart function passed");
+//   const item = addNewItem();
+//   saveToLocalStorage();
+// }
 
 function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
   const item = new CartItem(
@@ -136,14 +99,15 @@ function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
     basePrice,
     imageURL
   );
-  cart.add(item);
+  cartSet.add(item);
+  console.log(cartSet);
   return item;
 }
 
 function deleteItem(item) {
   //Deletes item from cart
   item.element.remove();
-  cart.delete(item);
+  cartSet.delete(item);
   saveToLocalStorage();
 }
 
@@ -159,7 +123,8 @@ function deleteItem(item) {
 function updateTotal() {
   //Updates the total price listed on the page.
   let total = 0;
-  for (let item of cart) {
+  for (let item of cartSet) {
+    console.log(cartSet);
     total = total + item.calculatedPrice;
   }
   let price = document.querySelector("#total");
@@ -184,35 +149,32 @@ var formatter = new Intl.NumberFormat("en-US", {
 function submitItem() {
   const itemImage = document.querySelector(".productimg");
   console.log(image);
-  const editorImgURL = itemImage.src;
 
   const itemName = document.querySelector("#title");
-  const editorName = itemName.value;
 
   const itemPrice = document.querySelector("#price");
-  itemPrice.innerHTML = formatter.format(this.calculatedPrice);
-  const editorPrice = itemPrice.value;
+  // itemPrice.innerHTML = formatter.format(this.calculatedPrice);
 
   const itemGlazing = document.querySelector("#glazing");
-  const editorGlazing = itemGlazing.value();
 
   const itemPackSize = document.querySelector("#packSize");
-  const editorPackSize = itemPackSize.value();
 
   const cartItem = addNewItem(
-    editorName,
-    editorGlazing,
-    editorPackSize,
-    editorPrice,
-    editorImgURL
+    itemName,
+    itemGlazing,
+    itemPackSize,
+    itemPrice,
+    itemImage
   );
+  createElement(cartItem);
 
   saveToLocalStorage();
 }
 
 function saveToLocalStorage() {
-  const cartArray = Array.from(cart);
-  console.log(cart);
+  const cartArray = Array.from(cartSet);
+  console.log(cartSet);
+  console.log(cartArray);
   const cartArrayString = JSON.stringify(cartArray);
   console.log(cartArrayString);
 
@@ -223,14 +185,15 @@ function retrieveFromLocalStorage() {
   const cartArrayString = localStorage.getItem("storedItems");
   const cartArray = JSON.parse(cartArrayString);
   for (const cartData of cartArray) {
-    const cart = addNewItem(
+    const cartItem = addNewItem(
       cartData.rollType,
       cartData.rollGlazing,
       cartData.packSize,
       cartData.basePrice,
       cartData.imageURL
     );
-    createElement(cart);
+    createElement(cartItem);
+    console.log(cartSet);
   }
 }
 
