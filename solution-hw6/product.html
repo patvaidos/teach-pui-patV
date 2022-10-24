@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8" />
+  <title>Products</title>
+  <head>
+    <!--Reading in JS files-->
+    <script defer src="rollsData.js"></script>
+    <script defer src="price.js" type="text/javascript"></script>
+    <script defer src="cartFunctionality.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/stylesheet.css" />
+    <div class="container-0">
+      <!--Bun Bun Bake Shop logo. When clicked, directs user back to gallery page-->
+      <div class="container-0">
+        <div class="logo">
+          <a href="./index.html">
+            <img src="logo/logo-01.svg" alt="Bun Bun Logo" width="350" />
+          </a>
+        </div>
+        <div class="subcontainer-0">
+          <!-- Navigation menu: directs user to product gallery page or cart.-->
+          <div class="navigation">
+            <div class="nav-element">
+              <h3>
+                <a class="hover_elements" href="./index.html">PRODUCTS</a>
+              </h3>
+            </div>
+            <div class="nav-element">
+              <h3>
+                <a class="hover_elements" href="./cart.html">CART</a>
+              </h3>
+            </div>
+          </div>
+          <div class="product-subheading">
+            <h2>Original cinnamon roll</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </head>
+
+  <body>
+    <!--Product detail page. Shows product, product name, and dropdown menus to select pack size and glazing.-->
+    <div class="container-2">
+      <div class="child-2-1">
+        <img class="productimg" src="" width="700" alt="Cinnamon roll" />
+      </div>
+
+      <div class="child-2-2">
+        <div class="grandchild-1">
+          <p>
+            Customize our delicious, <br />
+            hand-made cinnamon roll to <br />
+            your liking!
+          </p>
+        </div>
+        <!--Glazing dropdown menu-->
+        <div class="grandchild-2">
+          <div id="dropdown_menus">
+            <p>Glazing:</p>
+            <div class="dropdown_content">
+              <select
+                id="Glazing-Options"
+                onchange="glazingValueChange()"
+              ></select>
+            </div>
+          </div>
+          <!--Pack size dropdown menu-->
+          <div class="dropdown">
+            <p>Pack size:</p>
+            <div class="dropdown_content">
+              <select id="Pack-Size" onchange="packValueChange()"></select>
+            </div>
+          </div>
+        </div>
+        <!--Add to cart button-->
+        <div class="grandchild-3">
+          <p id="total">$2.49</p>
+          <button id="add_to_cart" onchange="addToCart()">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
