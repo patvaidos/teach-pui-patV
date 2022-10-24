@@ -136,14 +136,14 @@ function deleteItem(item) {
   saveToLocalStorage();
 }
 
-function cartFill() {
-  //Function to populate cart
-  for (let item of cart) {
-    item.createElement(() => {
-      deleteItem(item);
-    });
-  }
-}
+// function cartFill() {
+//   //Function to populate cart
+//   for (let item of cart) {
+//     item.createElement(() => {
+//       deleteItem(item);
+//     });
+//   }
+// }
 
 function updateTotal() {
   //Updates the total price listed on the page.
@@ -166,7 +166,7 @@ var formatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
-cartFill();
+// cartFill();
 updateTotal();
 
 //Homework 6 Local Storage
