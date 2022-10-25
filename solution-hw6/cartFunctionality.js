@@ -1,19 +1,4 @@
-//This file manages all the functionality for
-//Map of glazing names and price changes
-const glazingMap = {
-  Original: 0,
-  "Sugar milk": 0,
-  "Vanilla milk": 0.5,
-  "Double chocolate": 1.5,
-};
-
-//Map of pack sizes and price changes
-const packMap = {
-  1: 1,
-  3: 3,
-  6: 5,
-  12: 10,
-};
+//This file manages all the functionality for the shopping cart
 
 //Class definition for products added to the cart.
 class CartItem {
@@ -30,13 +15,6 @@ class CartItem {
     this.packSize = packSize;
     this.basePrice = basePrice;
     this.imageURL = imageURL;
-
-    //This calls the calculatePrice() function later in the document and uses the mapped glazing and pack size price changes
-    this.calculatedPrice = calculatePrice(
-      this.basePrice,
-      glazingMap[this.rollGlazing],
-      packMap[this.packSize]
-    );
   }
 
   createElement(deleteFunction) {
@@ -68,7 +46,7 @@ class CartItem {
     name.innerHTML = this.rollType + " Cinnamon Roll";
 
     let price = document.querySelector("#price");
-    price.innerHTML = formatter.format(this.calculatedPrice);
+    price.innerHTML = formatter.format(this.basePrice);
 
     let glazing = document.querySelector("#glazing");
     glazing.innerHTML = this.rollGlazing;
@@ -120,9 +98,9 @@ function deleteItem(item) {
   console.log(item);
   cartSet.delete(item);
   item.element.remove();
-
-  console.log("Item deleted");
   saveToLocalStorage();
+  updateCart();
+  updateTotal();
 }
 
 function cartFill(cart) {
@@ -139,8 +117,8 @@ function updateTotal() {
   let total = 0;
   let cartArray = Array.from(cartSet);
   for (let item of cartArray) {
-    total = total + item.calculatedPrice;
-    console.log(item.calculatedPrice);
+    total = total + item.basePrice;
+    console.log(item.basePrice);
   }
   let price = document.querySelector("#total");
 
@@ -150,7 +128,9 @@ function updateTotal() {
 
 function calculatePrice(basePrice, glazingPrice, packPrice) {
   //Calculates the total price of the products.
-  return (basePrice + glazingPrice) * packPrice;
+  let finalPrice = (basePrice + glazingPrice) * packPrice;
+  console.log(finalPrice);
+  return finalPrice;
 }
 
 // cartFill();

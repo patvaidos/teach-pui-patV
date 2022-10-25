@@ -31,14 +31,9 @@ class Roll {
     rollPrice.innerHTML = "$" + this.basePrice;
   }
 }
-
-let cart = [];
-if (localStorage.getItem("storedItems") != null) {
-  cart = retrieveFromLocalStorage();
-}
-console.log("cart: ");
-console.log(cart);
-console.log(cart[0]);
+//Default indexes for the glazing and pack inventories
+let glazingIndex = 0;
+let packIndex = 0;
 
 //Global variables are defined here
 let currentProduct;
@@ -46,9 +41,11 @@ const basePrice = 2.49;
 let currentProductGlazing;
 let currentProductPack;
 
-//Default indexes for the glazing and pack inventories
-let glazingIndex = 0;
-let packIndex = 0;
+let cart = [];
+
+if (localStorage.getItem("storedItems") != null) {
+  cart = retrieveFromLocalStorage();
+}
 
 //Array of objects to be added/removed from cart.
 //Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
@@ -94,6 +91,7 @@ let packArray = [
 //-------glazing and pack size options for their order using the dropdown menu and the price will update based on choice.--------------------
 
 //Variables store the selected HTML element for glazing and pack size respectfully.
+
 let selectGlazing = document.querySelector("#Glazing-Options");
 let packSelect = document.querySelector("#Pack-Size");
 
@@ -145,6 +143,7 @@ function calculatePrice(glazing, pack) {
   finalPrice = (currentProduct.basePrice + selectedGlaze) * selectedPack;
   finalPrice = finalPrice.toString();
   document.querySelector("#total").innerText = formatter.format(finalPrice);
+  currentProduct.calculatedPrice = finalPrice;
 }
 
 //Formats the finalPrice answer into a currency format.
@@ -176,6 +175,7 @@ function parseProducts() {
   );
   instanceProduct.updateElement();
   currentProduct = instanceProduct;
+  console.log();
 }
 
 //Function call to parse products.
@@ -185,8 +185,8 @@ parseProducts();
 function addItemToCart(item) {
   let cartThing = createCartItem(
     item.rollType,
-    item.rollGlazing,
-    item.packSize,
+    glazingArray[selectGlazing.value].optionName,
+    packArray[packSelect.value].optionName,
     item.calculatedPrice,
     item.imageURL
   );
