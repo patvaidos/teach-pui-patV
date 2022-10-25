@@ -144,6 +144,7 @@ function calculatePrice(glazing, pack) {
   finalPrice = finalPrice.toString();
   document.querySelector("#total").innerText = formatter.format(finalPrice);
   currentProduct.calculatedPrice = finalPrice;
+  console.log(currentProduct.calculatedPrice);
 }
 
 //Formats the finalPrice answer into a currency format.
@@ -187,7 +188,7 @@ function addItemToCart(item) {
     item.rollType,
     glazingArray[selectGlazing.value].optionName,
     packArray[packSelect.value].optionName,
-    item.calculatedPrice,
+    item.basePrice,
     item.imageURL
   );
 
@@ -202,20 +203,8 @@ addButton.addEventListener("click", () => {
 });
 
 //-------------------------------------------------------------------------Homework 6 Code-------------------------------------------------------------------------//
-function createCartItem(
-  rollType,
-  rollGlazing,
-  packSize,
-  calculatedPrice,
-  imageURL
-) {
-  const item = new Roll(
-    rollType,
-    rollGlazing,
-    packSize,
-    calculatedPrice,
-    imageURL
-  );
+function createCartItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
+  const item = new Roll(rollType, rollGlazing, packSize, basePrice, imageURL);
   return item;
 }
 
