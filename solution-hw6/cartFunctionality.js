@@ -41,7 +41,7 @@ class CartItem {
 
   createElement(deleteFunction) {
     //Copies the template from the HTML page to create HTML elements on the page.
-    console.log("Adding item");
+
     let template = document.querySelector("#cart-item-template");
     console.log(template);
     let clone = template.content.cloneNode(true);
@@ -79,14 +79,22 @@ class CartItem {
     saveToLocalStorage();
   }
 }
-
+//Formats the finalPrice answer into a currency format.
+var formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 //Cart Set
 let cartSet = new Set();
 if (localStorage.getItem("storedItems") != null) {
-  retrieveFromLocalStorage();
+  cartSet = retrieveFromLocalStorage();
 }
 
-console.log(cartSet);
+// console.log("retrieved local storage");
+// } else {
+//   let cartSet = new Set();
+// }
+
 // function addToCart() {
 //   //Adds the current product to the global cart array
 //   console.log("Add to cart function passed");
@@ -95,6 +103,7 @@ console.log(cartSet);
 // }
 
 function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
+  console.log("Adding item");
   const item = new CartItem(
     rollType,
     rollGlazing,
@@ -108,43 +117,41 @@ function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
 
 function deleteItem(item) {
   //Deletes item from cart
-
-  item.element.remove();
+  console.log(item);
   cartSet.delete(item);
+  item.element.remove();
 
+  console.log("Item deleted");
   saveToLocalStorage();
 }
 
-function cartFill(cartArray) {
+function cartFill(cart) {
   //Function to populate cart
-  for (let item of cartArray) {
-    item.createElement(deleteItem(item));
-    console.log("filling your cart!");
-    console.log(item);
+  for (let thing of cart) {
+    thing.createElement(deleteItem(thing));
+    console.log("Filling your cart");
   }
+  updateTotal();
 }
 
 function updateTotal() {
   //Updates the total price listed on the page.
   let total = 0;
-  for (let item of cartSet) {
-    console.log(cartSet);
+  let cartArray = Array.from(cartSet);
+  for (let item of cartArray) {
     total = total + item.calculatedPrice;
+    console.log(item.calculatedPrice);
   }
   let price = document.querySelector("#total");
+
   price.innerHTML = formatter.format(total);
+  console.log("Total updated");
 }
 
 function calculatePrice(basePrice, glazingPrice, packPrice) {
   //Calculates the total price of the products.
   return (basePrice + glazingPrice) * packPrice;
 }
-
-//Formats the finalPrice answer into a currency format.
-var formatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
 
 // cartFill();
 updateTotal();
@@ -158,7 +165,7 @@ updateTotal();
 //   const itemName = document.querySelector("#title");
 
 //   const itemPrice = document.querySelector("#price");
-//   // itemPrice.innerHTML = formatter.format(this.calculatedPrice);
+//   itemPrice.innerHTML = this.calculatedPrice;
 
 //   const itemGlazing = document.querySelector("#glazing");
 
@@ -177,7 +184,7 @@ updateTotal();
 // }
 
 function saveToLocalStorage() {
-  const cartArray = Array.from(cartSet);
+  let cartArray = Array.from(cartSet);
   console.log(cartSet);
   console.log(cartArray);
   const cartArrayString = JSON.stringify(cartArray);
@@ -188,7 +195,8 @@ function saveToLocalStorage() {
 
 function retrieveFromLocalStorage() {
   const cartArrayString = localStorage.getItem("storedItems");
-  const cartArray = JSON.parse(cartArrayString);
+  // console.log(localStorage.getItem("storedItems"));
+  let cartArray = JSON.parse(cartArrayString);
   for (const cartData of cartArray) {
     const cartItem = addNewItem(
       cartData.rollType,
@@ -197,12 +205,21 @@ function retrieveFromLocalStorage() {
       cartData.basePrice,
       cartData.imageURL
     );
+    cartItem.createElement(deleteItem);
+    cartSet.add(cartItem);
+    console.log(cartSet);
   }
-  cartFill(cartArray);
+
+  saveToLocalStorage();
+  console.log("retrieved local storage");
+  let newSet = new Set(cartArray);
+  return newSet;
+  // console.log(cartArray);
+  // cartFill(cartArray);
 }
 
-let deleteButton = this.element.querySelector(".remove-button");
-deleteButton.addEventListener("click", () => {
-  deleteFunction(".child-3-1");
-});
+// let deleteButton = this.element.querySelector(".remove-button");
+// deleteButton.addEventListener("click", () => {
+//   deleteFunction(".child-3-1");
+// });
 updateTotal();

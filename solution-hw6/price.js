@@ -31,12 +31,14 @@ class Roll {
     rollPrice.innerHTML = "$" + this.basePrice;
   }
 }
+
 let cart = [];
 if (localStorage.getItem("storedItems") != null) {
-  let cart = retrieveFromLocalStorage();
-} else {
-  let cart = [];
+  cart = retrieveFromLocalStorage();
 }
+console.log("cart: ");
+console.log(cart);
+console.log(cart[0]);
 
 //Global variables are defined here
 let currentProduct;
@@ -49,7 +51,6 @@ let glazingIndex = 0;
 let packIndex = 0;
 
 //Array of objects to be added/removed from cart.
-
 //Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
 let glazingArray = [
   {
@@ -174,7 +175,6 @@ function parseProducts() {
     rolls[chosenRoll].imageFile
   );
   instanceProduct.updateElement();
-  console.log("Product base price: " + rolls[chosenRoll].basePrice);
   currentProduct = instanceProduct;
 }
 
@@ -182,9 +182,17 @@ function parseProducts() {
 parseProducts();
 
 // //Add to cart element
-
 function addItemToCart(item) {
-  cart.push(item);
+  let cartThing = createCartItem(
+    item.rollType,
+    item.rollGlazing,
+    item.packSize,
+    item.calculatedPrice,
+    item.imageURL
+  );
+
+  cart.push(cartThing);
+  console.log(cart);
   saveToLocalStorage();
 }
 
@@ -193,43 +201,27 @@ addButton.addEventListener("click", () => {
   addItemToCart(currentProduct);
 });
 
-//Homework 6 Code
-function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
-  const item = new Roll(rollType, rollGlazing, packSize, basePrice, imageURL);
-  addItemToCart(item);
-  console.log("new item added!: " + cart);
+//-------------------------------------------------------------------------Homework 6 Code-------------------------------------------------------------------------//
+function createCartItem(
+  rollType,
+  rollGlazing,
+  packSize,
+  calculatedPrice,
+  imageURL
+) {
+  const item = new Roll(
+    rollType,
+    rollGlazing,
+    packSize,
+    calculatedPrice,
+    imageURL
+  );
   return item;
 }
-// function submitItem() {
-//   const itemImage = document.querySelector(".productimg");
-
-//   const itemName = document.querySelector("#title");
-
-//   const itemPrice = document.querySelector("#price");
-
-//   const itemGlazing = document.querySelector("#glazing");
-
-//   const itemPackSize = document.querySelector("#packSize");
-
-//   const cartItem = addNewItem(
-//     itemName,
-//     itemGlazing,
-//     itemPackSize,
-//     itemPrice,
-//     itemImage
-//   );
-//   // createElement(cartItem);
-//   cart.add(cartItem);
-//   console.log(cartItem);
-//   saveToLocalStorage();
-// }
 
 function saveToLocalStorage() {
   const cartArray = Array.from(cart);
-  console.log("current cart: " + cart);
-  console.log("cartArray: " + cartArray);
   const cartArrayString = JSON.stringify(cartArray);
-
   localStorage.setItem("storedItems", cartArrayString);
 }
 
@@ -237,16 +229,13 @@ function retrieveFromLocalStorage() {
   const cartArrayString = localStorage.getItem("storedItems");
   const cartArray = JSON.parse(cartArrayString);
   for (const cartData of cartArray) {
-    const cartItem = addNewItem(
+    const cartItem = createCartItem(
       cartData.rollType,
       cartData.rollGlazing,
       cartData.packSize,
       cartData.basePrice,
       cartData.imageURL
     );
-
-    console.log("cart from local storage: ");
-    console.log(cart);
   }
   return cartArray;
 }
