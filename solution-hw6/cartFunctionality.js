@@ -62,8 +62,7 @@ class CartItem {
   updateCart() {
     //Updates the elements on the page to reflect roll item information
     let image = document.querySelector(".productimg");
-    console.log(image);
-    image.src = this.imageURL;
+    image.src = "products/" + this.imageURL;
 
     let name = document.querySelector("#title");
     name.innerHTML = this.rollType + " Cinnamon Roll";
@@ -83,6 +82,10 @@ class CartItem {
 
 //Cart Set
 let cartSet = new Set();
+if (localStorage.getItem("storedItems") != null) {
+  retrieveFromLocalStorage();
+}
+
 console.log(cartSet);
 // function addToCart() {
 //   //Adds the current product to the global cart array
@@ -99,26 +102,27 @@ function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
     basePrice,
     imageURL
   );
-  cartSet.add(item);
-  console.log(cartSet);
+
   return item;
 }
 
 function deleteItem(item) {
   //Deletes item from cart
+
   item.element.remove();
   cartSet.delete(item);
+
   saveToLocalStorage();
 }
 
-// function cartFill() {
-//   //Function to populate cart
-//   for (let item of cart) {
-//     item.createElement(() => {
-//       deleteItem(item);
-//     });
-//   }
-// }
+function cartFill(cartArray) {
+  //Function to populate cart
+  for (let item of cartArray) {
+    item.createElement(deleteItem(item));
+    console.log("filling your cart!");
+    console.log(item);
+  }
+}
 
 function updateTotal() {
   //Updates the total price listed on the page.
@@ -143,33 +147,34 @@ var formatter = new Intl.NumberFormat("en-US", {
 });
 
 // cartFill();
+updateTotal();
 
 //Homework 6 Local Storage
 
-function submitItem() {
-  const itemImage = document.querySelector(".productimg");
-  console.log(image);
+// function submitItem() {
+//   const itemImage = document.querySelector(".productimg");
+//   console.log(image);
 
-  const itemName = document.querySelector("#title");
+//   const itemName = document.querySelector("#title");
 
-  const itemPrice = document.querySelector("#price");
-  // itemPrice.innerHTML = formatter.format(this.calculatedPrice);
+//   const itemPrice = document.querySelector("#price");
+//   // itemPrice.innerHTML = formatter.format(this.calculatedPrice);
 
-  const itemGlazing = document.querySelector("#glazing");
+//   const itemGlazing = document.querySelector("#glazing");
 
-  const itemPackSize = document.querySelector("#packSize");
+//   const itemPackSize = document.querySelector("#packSize");
 
-  const cartItem = addNewItem(
-    itemName,
-    itemGlazing,
-    itemPackSize,
-    itemPrice,
-    itemImage
-  );
-  createElement(cartItem);
+//   const cartItem = addNewItem(
+//     itemName,
+//     itemGlazing,
+//     itemPackSize,
+//     itemPrice,
+//     itemImage
+//   );
+//   createElement(cartItem);
 
-  saveToLocalStorage();
-}
+//   saveToLocalStorage();
+// }
 
 function saveToLocalStorage() {
   const cartArray = Array.from(cartSet);
@@ -192,13 +197,12 @@ function retrieveFromLocalStorage() {
       cartData.basePrice,
       cartData.imageURL
     );
-    createElement(cartItem);
-    console.log(cartSet);
   }
+  cartFill(cartArray);
 }
 
-if (localStorage.getItem("storedItems") != null) {
-  retrieveFromLocalStorage();
-}
-
+let deleteButton = this.element.querySelector(".remove-button");
+deleteButton.addEventListener("click", () => {
+  deleteFunction(".child-3-1");
+});
 updateTotal();

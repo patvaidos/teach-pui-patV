@@ -31,6 +31,12 @@ class Roll {
     rollPrice.innerHTML = "$" + this.basePrice;
   }
 }
+let cart = [];
+if (localStorage.getItem("storedItems") != null) {
+  let cart = retrieveFromLocalStorage();
+} else {
+  let cart = [];
+}
 
 //Global variables are defined here
 let currentProduct;
@@ -43,7 +49,6 @@ let glazingIndex = 0;
 let packIndex = 0;
 
 //Array of objects to be added/removed from cart.
-let cart = [];
 
 //Arrays of Product objects glazing and packs, with attributes optionName, the name of the product and the price change applied to the base price.
 let glazingArray = [
@@ -177,4 +182,71 @@ function parseProducts() {
 parseProducts();
 
 // //Add to cart element
-let cartElement = document.getElementById("add_to_cart");
+
+function addItemToCart(item) {
+  cart.push(item);
+  saveToLocalStorage();
+}
+
+let addButton = document.querySelector("#add_to_cart");
+addButton.addEventListener("click", () => {
+  addItemToCart(currentProduct);
+});
+
+//Homework 6 Code
+function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
+  const item = new Roll(rollType, rollGlazing, packSize, basePrice, imageURL);
+  addItemToCart(item);
+  console.log("new item added!: " + cart);
+  return item;
+}
+// function submitItem() {
+//   const itemImage = document.querySelector(".productimg");
+
+//   const itemName = document.querySelector("#title");
+
+//   const itemPrice = document.querySelector("#price");
+
+//   const itemGlazing = document.querySelector("#glazing");
+
+//   const itemPackSize = document.querySelector("#packSize");
+
+//   const cartItem = addNewItem(
+//     itemName,
+//     itemGlazing,
+//     itemPackSize,
+//     itemPrice,
+//     itemImage
+//   );
+//   // createElement(cartItem);
+//   cart.add(cartItem);
+//   console.log(cartItem);
+//   saveToLocalStorage();
+// }
+
+function saveToLocalStorage() {
+  const cartArray = Array.from(cart);
+  console.log("current cart: " + cart);
+  console.log("cartArray: " + cartArray);
+  const cartArrayString = JSON.stringify(cartArray);
+
+  localStorage.setItem("storedItems", cartArrayString);
+}
+
+function retrieveFromLocalStorage() {
+  const cartArrayString = localStorage.getItem("storedItems");
+  const cartArray = JSON.parse(cartArrayString);
+  for (const cartData of cartArray) {
+    const cartItem = addNewItem(
+      cartData.rollType,
+      cartData.rollGlazing,
+      cartData.packSize,
+      cartData.basePrice,
+      cartData.imageURL
+    );
+
+    console.log("cart from local storage: ");
+    console.log(cart);
+  }
+  return cartArray;
+}
