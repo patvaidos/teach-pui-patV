@@ -7,7 +7,7 @@ class CartItem {
   packSize;
   basePrice;
   imageURL;
-  element;
+  // element;
 
   constructor(rollType, rollGlazing, packSize, basePrice, imageURL) {
     this.rollType = rollType;
@@ -17,21 +17,23 @@ class CartItem {
     this.imageURL = imageURL;
   }
 
-  createElement(deleteFunction) {
+  createElement(deleteFunction, cartEle) {
+    console.log("cartEle", cartEle);
+
     //Copies the template from the HTML page to create HTML elements on the page.
 
     let template = document.querySelector("#cart-item-template");
     console.log(template);
     let clone = template.content.cloneNode(true);
-    this.element = clone.querySelector(".child-3-1");
-    console.log("this.element: " + this.element);
+    const ele = clone.querySelector(".child-3-1");
+    console.log("this.element: " + ele);
 
     let container = document.querySelector(".container-3");
-    container.prepend(this.element);
+    container.prepend(ele);
 
-    let deleteButton = this.element.querySelector(".remove-button");
+    let deleteButton = ele.querySelector(".remove-button");
     deleteButton.addEventListener("click", () => {
-      deleteFunction(".child-3-1");
+      deleteFunction(".child-3-1", cartEle);
     });
 
     this.updateCart();
@@ -94,26 +96,19 @@ function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
   return item;
 }
 
-function deleteItem(item) {
+function deleteItem(item, cartEle) {
+  console.log(cartEle);
   //Deletes item from cart
   let HTMLelement = document.querySelector(item.toString());
-
-  let JSElement = document.querySelector(item);
-  console.log(item);
   HTMLelement.remove();
-  cartSet.delete(JSElement);
-  localStorage.removeItem(JSElement);
 
+  cartSet.delete(cartEle);
+
+  let json = JSON.stringify(Array.from(cartSet));
+
+  localStorage.setItem("storedItems", json);
+  console.log("cartSet", cartSet);
   saveToLocalStorage();
-}
-
-function cartFill(cart) {
-  //Function to populate cart
-  for (let thing of cart) {
-    thing.createElement(deleteItem(thing));
-    console.log("Filling your cart");
-  }
-  updateTotal();
 }
 
 function updateTotal() {
@@ -144,6 +139,7 @@ function saveToLocalStorage() {
   const cartArrayString = JSON.stringify(cartArray);
 
   localStorage.setItem("storedItems", cartArrayString);
+  console.log(localStorage.getItem("storedItems"));
 }
 
 function retrieveFromLocalStorage() {
@@ -158,15 +154,18 @@ function retrieveFromLocalStorage() {
       cartData.basePrice,
       cartData.imageURL
     );
-    cartItem.createElement(deleteItem);
+    cartItem.createElement(deleteItem, cartItem);
+    console.log(cartSet);
     cartSet.add(cartItem);
+
+    console.log("hererererer");
+    console.log(cartItem);
     console.log(cartSet);
   }
 
   saveToLocalStorage();
   console.log("retrieved local storage");
-  let newSet = new Set(cartArray);
-  return newSet;
+  return cartSet;
 }
 
 updateTotal();
