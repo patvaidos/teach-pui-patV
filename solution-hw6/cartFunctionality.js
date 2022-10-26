@@ -1,12 +1,28 @@
 //This file manages all the functionality for the shopping cart
+const glazingMap = {
+  Original: 0,
+  "Sugar milk": 0,
+  "Vanilla milk": 0.5,
+  "Double chocolate": 1.5,
+};
+
+//Map of pack sizes and price changes
+const packMap = {
+  1: 1,
+  3: 3,
+  6: 5,
+  12: 10,
+};
 
 //Class definition for products added to the cart.
+
 class CartItem {
   rollType;
   rollGlazing;
   packSize;
   basePrice;
   imageURL;
+  calculatedPrice;
   // element;
 
   constructor(rollType, rollGlazing, packSize, basePrice, imageURL) {
@@ -15,18 +31,20 @@ class CartItem {
     this.packSize = packSize;
     this.basePrice = basePrice;
     this.imageURL = imageURL;
+    //This calls the calculatePrice() function later in the document and uses the mapped glazing and pack size price changes
+    this.calculatedPrice = calculatePrice(
+      this.basePrice,
+      glazingMap[this.rollGlazing],
+      packMap[this.packSize]
+    );
   }
 
   createElement(deleteFunction, cartEle) {
-    console.log("cartEle", cartEle);
-
-    //Copies the template from the HTML page to create HTML elements on the page.
-
+    //Copies the template from the HTML page to create HTML elements on the page, updates.
     let template = document.querySelector("#cart-item-template");
-    console.log(template);
+
     let clone = template.content.cloneNode(true);
     const ele = clone.querySelector(".child-3-1");
-    console.log("this.element: " + ele);
 
     let container = document.querySelector(".container-3");
     container.prepend(ele);
@@ -40,7 +58,7 @@ class CartItem {
   }
 
   updateCart() {
-    //Updates the elements on the page to reflect roll item information
+    //Updates the elements on the page to reflect roll item information and saves cart info to local storage.
     let image = document.querySelector(".productimg");
     image.src = "products/" + this.imageURL;
 
@@ -65,25 +83,15 @@ var formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
+
 //Cart Set
 let cartSet = new Set();
 if (localStorage.getItem("storedItems") != null) {
   cartSet = retrieveFromLocalStorage();
 }
 
-// console.log("retrieved local storage");
-// } else {
-//   let cartSet = new Set();
-// }
-
-// function addToCart() {
-//   //Adds the current product to the global cart array
-//   console.log("Add to cart function passed");
-//   const item = addNewItem();
-//   saveToLocalStorage();
-// }
-
 function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
+  //Function adds new item to cart.
   console.log("Adding item");
   const item = new CartItem(
     rollType,
@@ -97,17 +105,16 @@ function addNewItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
 }
 
 function deleteItem(item, cartEle) {
-  console.log(cartEle);
-  //Deletes item from cart
+  //Deleted item from DOM, local storage, and cart set.
   let HTMLelement = document.querySelector(item.toString());
   HTMLelement.remove();
 
   cartSet.delete(cartEle);
 
   let json = JSON.stringify(Array.from(cartSet));
-
   localStorage.setItem("storedItems", json);
-  console.log("cartSet", cartSet);
+
+  updateTotal();
   saveToLocalStorage();
 }
 
@@ -116,8 +123,7 @@ function updateTotal() {
   let total = 0;
   let cartArray = Array.from(cartSet);
   for (let item of cartArray) {
-    total = total + item.basePrice;
-    console.log(item.basePrice);
+    total = total + parseFloat(item.basePrice);
   }
   let price = document.querySelector("#total");
 
@@ -128,13 +134,13 @@ function updateTotal() {
 function calculatePrice(basePrice, glazingPrice, packPrice) {
   //Calculates the total price of the products.
   let finalPrice = (basePrice + glazingPrice) * packPrice;
-  console.log(finalPrice);
   return finalPrice;
 }
 
 //------------------------------------------------------Homework 6 Local Storage-------------------------------------------------------//
 
 function saveToLocalStorage() {
+  //
   let cartArray = Array.from(cartSet);
   const cartArrayString = JSON.stringify(cartArray);
 
@@ -144,7 +150,6 @@ function saveToLocalStorage() {
 
 function retrieveFromLocalStorage() {
   const cartArrayString = localStorage.getItem("storedItems");
-  // console.log(localStorage.getItem("storedItems"));
   let cartArray = JSON.parse(cartArrayString);
   for (const cartData of cartArray) {
     const cartItem = addNewItem(
@@ -155,16 +160,11 @@ function retrieveFromLocalStorage() {
       cartData.imageURL
     );
     cartItem.createElement(deleteItem, cartItem);
-    console.log(cartSet);
     cartSet.add(cartItem);
-
-    console.log("hererererer");
-    console.log(cartItem);
-    console.log(cartSet);
   }
 
   saveToLocalStorage();
-  console.log("retrieved local storage");
+  console.log("Retrieved local storage");
   return cartSet;
 }
 

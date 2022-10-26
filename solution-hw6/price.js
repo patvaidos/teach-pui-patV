@@ -37,6 +37,7 @@ let packIndex = 0;
 
 //Global variables are defined here
 let currentProduct;
+
 const basePrice = 2.49;
 let currentProductGlazing;
 let currentProductPack;
@@ -137,14 +138,19 @@ function createPackDropdown() {
 
 function calculatePrice(glazing, pack) {
   //Calculates the final price of the purchase by using a price formula with variables from the glazing & pack size arrays.
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const chosenRoll = params.get("roll");
+  rolls[chosenRoll];
+
   let finalPrice = currentProduct.basePrice;
   let selectedGlaze = glazingArray[glazingIndex].priceChange;
   let selectedPack = packArray[packIndex].priceChange;
-  finalPrice = (currentProduct.basePrice + selectedGlaze) * selectedPack;
+  finalPrice =
+    (rolls[currentProduct.rollType].basePrice + selectedGlaze) * selectedPack;
   finalPrice = finalPrice.toString();
   document.querySelector("#total").innerText = formatter.format(finalPrice);
-  currentProduct.calculatedPrice = finalPrice;
-  console.log(currentProduct.calculatedPrice);
+  currentProduct.basePrice = finalPrice;
 }
 
 //Formats the finalPrice answer into a currency format.
@@ -164,7 +170,6 @@ function parseProducts() {
   const queryString = window.location.search;
   const params = new URLSearchParams(queryString);
   const chosenRoll = params.get("roll");
-
   let instanceProduct;
   rolls[chosenRoll];
   instanceProduct = new Roll(
@@ -176,7 +181,6 @@ function parseProducts() {
   );
   instanceProduct.updateElement();
   currentProduct = instanceProduct;
-  console.log();
 }
 
 //Function call to parse products.
@@ -189,7 +193,8 @@ function addItemToCart(item) {
     glazingArray[selectGlazing.value].optionName,
     packArray[packSelect.value].optionName,
     item.basePrice,
-    item.imageURL
+    item.imageURL,
+    item.calculatedPrice
   );
 
   cart.push(cartThing);
@@ -197,6 +202,7 @@ function addItemToCart(item) {
   saveToLocalStorage();
 }
 
+//Button with event listener for add to cart button
 let addButton = document.querySelector("#add_to_cart");
 addButton.addEventListener("click", () => {
   addItemToCart(currentProduct);
@@ -204,17 +210,20 @@ addButton.addEventListener("click", () => {
 
 //-------------------------------------------------------------------------Homework 6 Code-------------------------------------------------------------------------//
 function createCartItem(rollType, rollGlazing, packSize, basePrice, imageURL) {
+  //Creates a new cart
   const item = new Roll(rollType, rollGlazing, packSize, basePrice, imageURL);
   return item;
 }
 
 function saveToLocalStorage() {
+  //Saves cart objects to local storage
   const cartArray = Array.from(cart);
   const cartArrayString = JSON.stringify(cartArray);
   localStorage.setItem("storedItems", cartArrayString);
 }
 
 function retrieveFromLocalStorage() {
+  //Retrieves items from local storage
   const cartArrayString = localStorage.getItem("storedItems");
   const cartArray = JSON.parse(cartArrayString);
   for (const cartData of cartArray) {
