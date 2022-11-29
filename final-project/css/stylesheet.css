@@ -1,0 +1,30 @@
+#map {
+  height: 400px;
+
+  width: 100%;
+}
+
+.active {
+  width: 42.25px;
+  height: 42.59px;
+}
+
+#form1 {
+  width: auto;
+}
+
+/* .bookmarkButton {
+  background: url("/assets/bookmark.png");
+  width: 42.25px;
+  height: 42.59px;
+}
+.searchButton {
+  background: url("/assets/bookmark.png");
+  width: 42.25px;
+  height: 42.59px;
+}
+.questionmarkButton {
+  background: url("/assets/bookmark.png");
+  width: 42.25px;
+  height: 42.59px;
+} */
