@@ -1,5 +1,5 @@
 #map {
-  height: 400px;
+  height: 600px;
 
   width: 100%;
 }
@@ -7,24 +7,11 @@
 .active {
   width: 42.25px;
   height: 42.59px;
+  background-color: #1e1e1e;
+  border-color: white;
+  object-fit: contain;
 }
 
 #form1 {
-  width: auto;
+  width: 80%;
 }
-
-/* .bookmarkButton {
-  background: url("/assets/bookmark.png");
-  width: 42.25px;
-  height: 42.59px;
-}
-.searchButton {
-  background: url("/assets/bookmark.png");
-  width: 42.25px;
-  height: 42.59px;
-}
-.questionmarkButton {
-  background: url("/assets/bookmark.png");
-  width: 42.25px;
-  height: 42.59px;
-} */
