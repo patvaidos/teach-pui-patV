@@ -11,7 +11,27 @@
   border-color: white;
   object-fit: contain;
 }
-
+.navbar {
+  border-radius: 0px;
+}
 #form1 {
   width: 80%;
+}
+
+.overlay-container {
+  position: absolute;
+
+  width: 100%;
+  right: -20.63%;
+  top: 7.21%;
+  bottom: -60.94%;
+  background: rgba(29, 185, 84, 0.93);
+  /* transform: matrix(-0.01, 1, -1, 0, 0, 0); */
+}
+.header {
+  color: white;
+}
+#placeholder {
+  width: 10%;
+  height: 10%;
 }
