@@ -5,7 +5,156 @@ function initMap() {
   var map = new google.maps.Map(document.getElementById("map"), {
     zoom: 4,
     center: { lat: 40.4406, lng: -79.9959 },
+    styles: [
+      {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#333739",
+          },
+        ],
+      },
+      {
+        featureType: "landscape",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#2ecc71",
+          },
+        ],
+      },
+      {
+        featureType: "poi",
+        stylers: [
+          {
+            color: "#2ecc71",
+          },
+          {
+            lightness: -7,
+          },
+        ],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#2ecc71",
+          },
+          {
+            lightness: -28,
+          },
+        ],
+      },
+      {
+        featureType: "road.arterial",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#2ecc71",
+          },
+          {
+            visibility: "on",
+          },
+          {
+            lightness: -15,
+          },
+        ],
+      },
+      {
+        featureType: "road.local",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#2ecc71",
+          },
+          {
+            lightness: -18,
+          },
+        ],
+      },
+      {
+        elementType: "labels.text.fill",
+        stylers: [
+          {
+            color: "#ffffff",
+          },
+        ],
+      },
+      {
+        elementType: "labels.text.stroke",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "transit",
+        elementType: "geometry",
+        stylers: [
+          {
+            color: "#2ecc71",
+          },
+          {
+            lightness: -34,
+          },
+        ],
+      },
+      {
+        featureType: "administrative",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "on",
+          },
+          {
+            color: "#333739",
+          },
+          {
+            weight: 0.8,
+          },
+        ],
+      },
+      {
+        featureType: "poi.park",
+        stylers: [
+          {
+            color: "#2ecc71",
+          },
+        ],
+      },
+      {
+        featureType: "road",
+        elementType: "geometry.stroke",
+        stylers: [
+          {
+            color: "#333739",
+          },
+          {
+            weight: 0.3,
+          },
+          {
+            lightness: 10,
+          },
+        ],
+      },
+    ],
+    mapTypeControlOptions: {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID],
+    },
+    disableDefaultUI: true,
+    mapTypeControl: false,
+    scaleControl: true,
+    zoomControl: true,
+    zoomControlOptions: {
+      style: google.maps.ZoomControlStyle.LARGE,
+    },
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
   });
+
+  var maincolor = "#D9D9D9";
   // for (var i = 0; i < json.page.size; i++) {
   //   addMarker(map, json._embedded.events[i]);
   // }

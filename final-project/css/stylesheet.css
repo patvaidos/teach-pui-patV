@@ -13,6 +13,7 @@
 }
 .navbar {
   border-radius: 0px;
+  margin: 0;
 }
 #form1 {
   width: 80%;
@@ -38,4 +39,22 @@
 .nav-item {
   height: auto;
   width: auto;
+}
+
+.form-inline {
+  border: 1%;
+  size: auto;
+  padding-left: 2%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.nav {
+  padding-right: 2%;
+  padding-top: 1%;
+}
+
+#bookmarkicon {
+  height: 30px;
+  width: 30px;
 }
