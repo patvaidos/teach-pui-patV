@@ -58,3 +58,23 @@
   height: 30px;
   width: 30px;
 }
+
+#info {
+  position: absolute;
+  z-index: 3;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.info-overlay {
+  position: absolute;
+  z-index: 2;
+  color: rgba(25, 20, 20, 0.95);
+}

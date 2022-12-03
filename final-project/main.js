@@ -1,5 +1,6 @@
 class eventMarkers {}
 let map;
+let infoClicked = false;
 function initMap() {
   // var mapDiv = document.getElementById("map");
   var map = new google.maps.Map(document.getElementById("map"), {
@@ -11,7 +12,7 @@ function initMap() {
         elementType: "geometry",
         stylers: [
           {
-            color: "#333739",
+            color: "#D9D9D9",
           },
         ],
       },
@@ -20,7 +21,7 @@ function initMap() {
         elementType: "geometry",
         stylers: [
           {
-            color: "#2ecc71",
+            color: "#000000",
           },
         ],
       },
@@ -28,7 +29,7 @@ function initMap() {
         featureType: "poi",
         stylers: [
           {
-            color: "#2ecc71",
+            color: "#000000",
           },
           {
             lightness: -7,
@@ -40,7 +41,7 @@ function initMap() {
         elementType: "geometry",
         stylers: [
           {
-            color: "#2ecc71",
+            color: "#000000",
           },
           {
             lightness: -28,
@@ -52,7 +53,7 @@ function initMap() {
         elementType: "geometry",
         stylers: [
           {
-            color: "#2ecc71",
+            color: "#000000",
           },
           {
             visibility: "on",
@@ -67,7 +68,7 @@ function initMap() {
         elementType: "geometry",
         stylers: [
           {
-            color: "#2ecc71",
+            color: "#000000",
           },
           {
             lightness: -18,
@@ -78,7 +79,7 @@ function initMap() {
         elementType: "labels.text.fill",
         stylers: [
           {
-            color: "#ffffff",
+            color: "#2ecc71",
           },
         ],
       },
@@ -110,7 +111,7 @@ function initMap() {
             visibility: "on",
           },
           {
-            color: "#333739",
+            color: "#000000",
           },
           {
             weight: 0.8,
@@ -121,7 +122,7 @@ function initMap() {
         featureType: "poi.park",
         stylers: [
           {
-            color: "#2ecc71",
+            color: "#000000",
           },
         ],
       },
@@ -130,7 +131,7 @@ function initMap() {
         elementType: "geometry.stroke",
         stylers: [
           {
-            color: "#333739",
+            color: "#000000",
           },
           {
             weight: 0.3,
@@ -153,11 +154,6 @@ function initMap() {
     },
     mapTypeId: google.maps.MapTypeId.ROADMAP,
   });
-
-  var maincolor = "#D9D9D9";
-  // for (var i = 0; i < json.page.size; i++) {
-  //   addMarker(map, json._embedded.events[i]);
-  // }
 }
 
 function getLocation() {
@@ -239,3 +235,51 @@ function addMarker(map) {
 // getLocation();
 window.initMap = initMap;
 addMarker(map);
+
+//Event listeners for navbar
+function homebuttonClick() {
+  console.log("Home Button Clicked");
+}
+
+document
+  .querySelector("#searchIcon")
+  .addEventListener("click", homebuttonClick());
+
+function questionMarkClick() {
+  console.log("Question Button Clicked");
+  infoClicked = true;
+  if (infoClicked == true) {
+    on();
+  }
+}
+
+document
+  .querySelector("#questionMarkIcon")
+  .addEventListener("click", questionMarkClick());
+
+function bookmarkClick() {
+  console.log("Bookmark Button Clicked");
+}
+
+document
+  .querySelector("#bookmarkicon")
+  .addEventListener("click", bookmarkClick());
+
+//Event listeners for info overlay
+
+function on() {
+  document.getElementById("info-overlay").style.display = "block";
+  console.log("on");
+}
+
+function off() {
+  document.getElementById("info-overlay").style.display = "none";
+  console.log("off");
+}
+
+function closeInfo() {
+  console.log("Info page closed");
+  off();
+}
+
+off();
