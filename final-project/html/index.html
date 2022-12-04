@@ -12,18 +12,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script type="text/javascript" src="/main.js"></script>
+    <script defer type="text/javascript" src="/main.js"></script>
     <link rel="stylesheet" href="/css/stylesheet.css" />
-    <script type="module" src="../main.js"></script>
+    <script defer type="text/javascript" src="/main.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <ul class="nav navbar-nav">
           <li class="nav-item active">
-            <button class="active">
+            <!-- <button class="active">
               <a href="#"><img id="searchIcon" src="/assets/search.png" /></a>
-            </button>
+            </button> -->
           </li>
           <li class="nav-item">
             <button class="active">
@@ -33,7 +33,7 @@
             </button>
           </li>
           <li class="nav-item">
-            <button class="active">
+            <button onclick="questionMarkClick()" class="active">
               <a href="#"
                 ><img id="questionMarkIcon" src="/assets/questionmark.png"
               /></a>
@@ -48,9 +48,11 @@
             placeholder="Search artist name (e.g. Taylor Swift)"
             aria-label="Search"
           />
+          <button><img id="searchIcon" src="/assets/search.png" /></button>
         </form>
       </div>
     </nav>
+
     <div class="overlay-container">
       <div class="row">
         <div class="col-md-5">
@@ -71,18 +73,19 @@
         </div>
       </div>
     </div>
-    <!-- <div class="info-overlay">
-      <div id="x-out">
-        <button><img src="/assets/close.png" /></button>
-      </div>
+    <div onclick="off()" id="info-overlay">
       <div class="text-center">
-        <h3 id="info">
-          Showify is a tool designed to help you track and save concerts by your
-          favorite artist. Search up the artist that you want to track, save the
-          date, and check when additional dates are added.
-        </h3>
+        <h4 id="info">
+          <p>
+            Showify is a tool designed to help you track and save concerts by
+            your favorite artist.
+          </p>
+          <p>Search up the artist that you want to track, save the date,</p>
+          <p>and check when additional dates are added.</p>
+          <p>Click anywhere to begin.</p>
+        </h4>
       </div>
-    </div> -->
+    </div>
 
     <!-- <p id="location">location there</p> -->
     <script

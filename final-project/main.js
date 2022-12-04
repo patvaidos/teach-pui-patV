@@ -1,6 +1,5 @@
-class eventMarkers {}
-let map;
-let infoClicked = false;
+// class eventMarkers {}
+var infoClicked = false;
 function initMap() {
   // var mapDiv = document.getElementById("map");
   var map = new google.maps.Map(document.getElementById("map"), {
@@ -154,6 +153,7 @@ function initMap() {
     },
     mapTypeId: google.maps.MapTypeId.ROADMAP,
   });
+  addMarker(map);
 }
 
 function getLocation() {
@@ -234,7 +234,6 @@ function addMarker(map) {
 
 // getLocation();
 window.initMap = initMap;
-addMarker(map);
 
 //Event listeners for navbar
 function homebuttonClick() {
@@ -243,13 +242,13 @@ function homebuttonClick() {
 
 document
   .querySelector("#searchIcon")
-  .addEventListener("click", homebuttonClick());
+  .addEventListener("click", homebuttonClick);
 
 function questionMarkClick() {
   console.log("Question Button Clicked");
-  infoClicked = true;
-  if (infoClicked == true) {
+  if (infoClicked == false) {
     on();
+    infoClicked = true;
   }
 }
 
@@ -269,17 +268,15 @@ document
 
 function on() {
   document.getElementById("info-overlay").style.display = "block";
+  document.getElementById("info").style.display = "block";
+  console.log("infoCLicked:" + infoClicked);
   console.log("on");
 }
 
 function off() {
   document.getElementById("info-overlay").style.display = "none";
+  document.getElementById("info").style.display = "none";
+  infoClicked = false;
+  console.log("infoCLicked:" + infoClicked);
   console.log("off");
 }
-
-function closeInfo() {
-  console.log("Info page closed");
-  off();
-}
-
-off();
