@@ -36,25 +36,27 @@
             </button>
           </li>
           <li class="nav-item">
-            <button onclick="questionMarkClick()" class="active">
+            <!-- <button onclick="questionMarkClick()" class="active">
               <a href="#"
                 ><img
                   id="questionMarkIcon"
                   src="/assets/questionmark.png"
                   alt="Information"
               /></a>
-            </button>
+            </button> -->
           </li>
         </ul>
-        <form class="form-inline">
+        <form class="form-inline" role="search">
           <input
             type="search"
-            id="form1"
+            id="search-input"
             class="form-control"
             placeholder="Search artist name (e.g. Taylor Swift)"
             aria-label="Search"
           />
-          <button><img id="searchIcon" src="/assets/search.png" /></button>
+          <button type="submit" onclick="getEventDetails()" id="search-button">
+            <img id="searchIcon" src="/assets/search.png" />
+          </button>
         </form>
       </div>
     </nav>

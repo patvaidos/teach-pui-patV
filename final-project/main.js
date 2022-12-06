@@ -4,7 +4,7 @@
 //     this.currentValue = currentValue;
 //   }
 // }
-
+// const SEARCHDEFAULT = "search default";
 var infoClicked = false;
 function initMap() {
   // var mapDiv = document.getElementById("map");
@@ -161,21 +161,45 @@ function initMap() {
   });
   addMarker(map);
 }
+// const searchButton = document.getElementById("form-inline");
 
 //Need to add function that assigns the attractionId variable as the search bar input
 //add event listener that runs this func only after enter or search button is pressed.
 function getSearch() {
-  var currentVal = document.getElementById("searchInput");
-  const SEARCHDEFAULT = document.getElementById("searchInput");
-  if (currentVal !== SEARCHDEFAULT) {
-    return currentVal;
-  } else {
-    return "Search Query"; //figure out what to return here
-  }
+  //--------------------CODE DUMP INBOUND----------------------//
+  // var currentVal = document.getElementById("searchInput");
+  // console.log("search default: " + SEARCHDEFAULT);
+  // console.log("currentVal innerHTML: " + currentVal.innerHTML);
+
+  // if (currentVal.innerHTML !== "Search artist to display tour dates") {
+  //   return currentVal.innerHTML;
+  // } else {
+  //   return SEARCHDEFAULT;
+  // }
+
+  // console.log(searchInput);
+  // searchButton.addEventListener("click", () => {
+  //   const inputValue = searchInput.value;
+  //   return inputValue;
+  // });
+  const searchInput = document.getElementById("search-input");
+  console.log(searchInput.value);
+
+  return searchInput.value;
+  //figure out what to return here
 }
+
+//Event handler for the search
+document
+  .querySelector("#search-button")
+  .addEventListener("submit", getEventDetails());
+
 function getEventDetails() {
-  var currentVal = getSearch();
-  console.log(currentVal);
+  // var currentVal = getSearch();
+  const searchInput = document.getElementById("search-input");
+  console.log(searchInput.value);
+  var currentVal = searchInput.value;
+  console.log("got the attractionID on like 178: " + currentVal);
   //clean this up later its atrocious
   var attractionId = currentVal;
   return attractionId; //do something about this return idk
@@ -228,7 +252,7 @@ function showPosition(position) {
     type: "GET",
     url:
       "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&attractionId=" +
-      attractionId, //event search -- filters by lat.long -- replace with artists name
+      attractionId, // actually no, it's your search bar dummy
     async: true,
     dataType: "json",
     success: function (json) {
@@ -252,10 +276,10 @@ function showPosition(position) {
 //   }
 // }
 9;
-//Adds events to the DOM as a list
+//Gets the name of the event and shows is to
 function showEvents(json) {
   for (var i = 0; i < json.page.size; i++) {
-    $("#events").append("<p>" + json._embedded.events[i].name + "</p>");
+    $("#events").append("<p>" + json._embedded.events[i].name + "</p>"); //takes the event object from json, gets the name of the event
   }
 }
 
@@ -272,7 +296,6 @@ function addMarker(map) {
   });
   marker.setIcon("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
   marker.setMap();
-  console.log(marker);
 }
 
 window.initMap = initMap;
@@ -282,9 +305,7 @@ function homebuttonClick() {
   console.log("Home Button Clicked");
 }
 
-document
-  .querySelector("#searchIcon")
-  .addEventListener("click", homebuttonClick);
+document.querySelector("#searchIcon").addEventListener("onclick", getSearch());
 
 function questionMarkClick() {
   console.log("Question Button Clicked");
@@ -296,7 +317,7 @@ function questionMarkClick() {
 
 document
   .querySelector("#questionMarkIcon")
-  .addEventListener("click", questionMarkClick());
+  .addEventListener("onclick", questionMarkClick());
 
 function bookmarkClick() {
   console.log("Bookmark Button Clicked");
@@ -304,7 +325,7 @@ function bookmarkClick() {
 
 document
   .querySelector("#bookmarkicon")
-  .addEventListener("click", bookmarkClick());
+  .addEventListener("onclick", bookmarkClick());
 
 //Event listeners for info overlay
 function on() {
