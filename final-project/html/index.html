@@ -46,7 +46,12 @@
             </button> -->
           </li>
         </ul>
-        <form class="form-inline" role="search">
+        <form
+          action="#"
+          onsubmit="getSearch();return false"
+          class="form-inline"
+          role="search"
+        >
           <input
             type="search"
             id="search-input"
@@ -106,5 +111,6 @@
     ></script>
     <div id="map"></div>
     <div id="events"></div>
+    <div id="eventlocation"></div>
   </body>
 </html>

@@ -5,10 +5,11 @@
 //   }
 // }
 // const SEARCHDEFAULT = "search default";
+var map;
 var infoClicked = false;
 function initMap() {
   // var mapDiv = document.getElementById("map");
-  var map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById("map"), {
     zoom: 4,
     center: { lat: 40.4406, lng: -79.9959 },
     styles: [
@@ -202,9 +203,11 @@ function getEventDetails() {
   console.log("got the keyword on like 178: " + currentVal);
   //clean this up later its atrocious
   var keyword = currentVal;
+
   return keyword; //do something about this return idk
 }
 //Gets geolocation of browser user. Browser will automatically ask users for permission in order to access latitude and longitude values.
+//This also runs showPosition() so that you can get the filtered results
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -236,6 +239,7 @@ function showError(error) {
 }
 
 //Find events from Discovery API and filter results
+//Pass in the keyword instead of the position, show all events.
 function showPosition(position) {
   //Find the events
   // var x = document.getElementById("location");
@@ -252,7 +256,7 @@ function showPosition(position) {
     type: "GET",
     url:
       "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&keyword=" +
-      keyword, // actually no, it's your search bar dummy
+      keyword, // changed to keyword, much better :)
     async: true,
     dataType: "json",
     success: function (json) {
@@ -261,7 +265,7 @@ function showPosition(position) {
       e.innerHTML = json.page.totalElements + " events found.";
       showEvents(json); //adds events to the DOM
       initMap(position, json); //why does this need position??? in case this crashes: position, json;
-      console.log(position);
+      console.log("position:" + position);
     },
     error: function (xhr, status, err) {
       console.log(err);
@@ -275,26 +279,40 @@ function showPosition(position) {
 //     $("#events").append("<p>" + json._embedded.events[i]._links + "</p>");
 //   }
 // }
-9;
-//Gets the name of the event and shows is to
+
+//Gets the name of the event and shows is t
 function showEvents(json) {
+  let lat;
+  let long;
   for (var i = 0; i < json.page.size; i++) {
-    $("#events").append("<p>" + json._embedded.events[i].name + "</p>"); //takes the event object from json, gets the name of the event
+    $("#events").append("<p>" + json._embedded.events[i].name + "</p>");
+    // console.log(json._embedded.events[i].name);
+
+    lat = parseFloat(
+      json._embedded.events[i]._embedded.venues[0].location.latitude
+    );
+
+    long = parseFloat(
+      json._embedded.events[i]._embedded.venues[0].location.longitude
+    );
+
+    // latlong = json._embedded.events[i].latlong;
+
+    addMarker(lat, long); //takes the event object from json, gets the name of the event
   }
 }
 
 //Adds these events onto the map
-function addMarker(map) {
+function addMarker(lati, long) {
+  let latlong = { lati, long };
+  let image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+  console.log(latlong);
   var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(
-      // event._embedded.venues[0].location.latitude, //replace these with the events' lat/long filtered by artist name, event details
-      // event._embedded.venues[0].location.longitude
-      41.8781,
-      -87.6298
-    ),
-    map: map,
+    position: new google.maps.LatLng(latlong),
+    map: this.map,
+    icon: image,
   });
-  marker.setIcon("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+
   marker.setMap();
 }
 
