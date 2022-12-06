@@ -192,17 +192,17 @@ function getSearch() {
 //Event handler for the search
 document
   .querySelector("#search-button")
-  .addEventListener("submit", getEventDetails());
+  .addEventListener("submit", getEventDetails);
 
 function getEventDetails() {
   // var currentVal = getSearch();
   const searchInput = document.getElementById("search-input");
   console.log(searchInput.value);
   var currentVal = searchInput.value;
-  console.log("got the attractionID on like 178: " + currentVal);
+  console.log("got the keyword on like 178: " + currentVal);
   //clean this up later its atrocious
-  var attractionId = currentVal;
-  return attractionId; //do something about this return idk
+  var keyword = currentVal;
+  return keyword; //do something about this return idk
 }
 //Gets geolocation of browser user. Browser will automatically ask users for permission in order to access latitude and longitude values.
 function getLocation() {
@@ -245,14 +245,14 @@ function showPosition(position) {
   //   "<br>Longitude: " +
   //   position.coords.longitude;
   // var latlon = position.coords.latitude + "," + position.coords.longitude;
-  var attractionId = getEventDetails();
+  var keyword = getEventDetails();
 
   //Filter the results
   $.ajax({
     type: "GET",
     url:
-      "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&attractionId=" +
-      attractionId, // actually no, it's your search bar dummy
+      "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&keyword=" +
+      keyword, // actually no, it's your search bar dummy
     async: true,
     dataType: "json",
     success: function (json) {
@@ -305,7 +305,7 @@ function homebuttonClick() {
   console.log("Home Button Clicked");
 }
 
-document.querySelector("#searchIcon").addEventListener("onclick", getSearch());
+// document.querySelector("#searchIcon").addEventListener("onclick", getSearch());
 
 function questionMarkClick() {
   console.log("Question Button Clicked");
@@ -315,17 +315,17 @@ function questionMarkClick() {
   }
 }
 
-document
-  .querySelector("#questionMarkIcon")
-  .addEventListener("onclick", questionMarkClick());
+// document
+//   .querySelector("#questionMarkIcon")
+//   .addEventListener("onclick", questionMarkClick());
 
 function bookmarkClick() {
   console.log("Bookmark Button Clicked");
 }
 
-document
-  .querySelector("#bookmarkicon")
-  .addEventListener("onclick", bookmarkClick());
+// document
+//   .querySelector("#bookmarkicon")
+//   .addEventListener("onclick", bookmarkClick());
 
 //Event listeners for info overlay
 function on() {
