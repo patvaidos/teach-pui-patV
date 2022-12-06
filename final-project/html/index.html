@@ -28,14 +28,20 @@
           <li class="nav-item">
             <button class="active">
               <a href="#"
-                ><img id="bookmarkicon" src="/assets/bookmark.png"
+                ><img
+                  id="bookmarkicon"
+                  src="/assets/bookmark.png"
+                  alt="Saved Items"
               /></a>
             </button>
           </li>
           <li class="nav-item">
             <button onclick="questionMarkClick()" class="active">
               <a href="#"
-                ><img id="questionMarkIcon" src="/assets/questionmark.png"
+                ><img
+                  id="questionMarkIcon"
+                  src="/assets/questionmark.png"
+                  alt="Information"
               /></a>
             </button>
           </li>
@@ -57,7 +63,11 @@
       <div class="row">
         <div class="col-md-5">
           <div class="col-md-5">
-            <img id="placeholder" src="/assets/placeholder.png" />
+            <img
+              id="placeholder"
+              src="/assets/placeholder.png"
+              alt="Artist Image"
+            />
           </div>
           <div class="col-md-5">
             <h4 id="upcomingtoursTitle"></h4>
@@ -67,7 +77,7 @@
               <h3 id="artistname"></h3>
             </div>
             <div class="col-md-5">
-              <h5>Search artist to display tour dates</h5>
+              <h5 id="searchInput">Search artist to display tour dates</h5>
             </div>
           </div>
         </div>
@@ -87,7 +97,7 @@
       </div>
     </div>
 
-    <!-- <p id="location">location there</p> -->
+    <p id="location">location there</p>
     <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAnMZDgepUE0cyW2fX9TfqiRDVilBF5sc&callback=initMap"

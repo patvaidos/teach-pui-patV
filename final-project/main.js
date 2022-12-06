@@ -1,4 +1,10 @@
-// class eventMarkers {}
+// class SearchObject {
+//   constructor(defaultValue, currentValue){
+//     this.defaultValue = defaultValue;
+//     this.currentValue = currentValue;
+//   }
+// }
+
 var infoClicked = false;
 function initMap() {
   // var mapDiv = document.getElementById("map");
@@ -156,9 +162,32 @@ function initMap() {
   addMarker(map);
 }
 
+//Need to add function that assigns the attractionId variable as the search bar input
+//add event listener that runs this func only after enter or search button is pressed.
+function getSearch() {
+  var currentVal = document.getElementById("searchInput");
+  const SEARCHDEFAULT = document.getElementById("searchInput");
+  if (currentVal !== SEARCHDEFAULT) {
+    return currentVal;
+  } else {
+    return "Search Query"; //figure out what to return here
+  }
+}
+function getEventDetails() {
+  var currentVal = getSearch();
+  console.log(currentVal);
+  //clean this up later its atrocious
+  var attractionId = currentVal;
+  return attractionId; //do something about this return idk
+}
+//Gets geolocation of browser user. Browser will automatically ask users for permission in order to access latitude and longitude values.
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
+    console.log(
+      "current location: " +
+        navigator.geolocation.getCurrentPosition(showPosition, showError)
+    );
   } else {
     var x = document.getElementById("location");
     x.innerHTML = "Geolocation is not supported by this browser.";
@@ -182,28 +211,33 @@ function showError(error) {
   }
 }
 
+//Find events from Discovery API and filter results
 function showPosition(position) {
-  var x = document.getElementById("location");
-  x.innerHTML =
-    "Latitude: " +
-    position.coords.latitude +
-    "<br>Longitude: " +
-    position.coords.longitude;
-  var latlon = position.coords.latitude + "," + position.coords.longitude;
+  //Find the events
+  // var x = document.getElementById("location");
+  // x.innerHTML =
+  //   "Latitude: " +
+  //   position.coords.latitude +
+  //   "<br>Longitude: " +
+  //   position.coords.longitude;
+  // var latlon = position.coords.latitude + "," + position.coords.longitude;
+  var attractionId = getEventDetails();
 
+  //Filter the results
   $.ajax({
     type: "GET",
     url:
-      "https://app.ticketmaster.com/discovery/v2/events.json?{kshjKAwSA1epUdiKUQuDvHKBAmMaubAC}" +
-      latlon,
+      "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&attractionId=" +
+      attractionId, //event search -- filters by lat.long -- replace with artists name
     async: true,
     dataType: "json",
     success: function (json) {
       console.log(json);
       var e = document.getElementById("events");
       e.innerHTML = json.page.totalElements + " events found.";
-      showEvents(json);
-      initMap(position, json);
+      showEvents(json); //adds events to the DOM
+      initMap(position, json); //why does this need position??? in case this crashes: position, json;
+      console.log(position);
     },
     error: function (xhr, status, err) {
       console.log(err);
@@ -211,16 +245,25 @@ function showPosition(position) {
   });
 }
 
+//Gets event objects from the filtered results and appends to
+// function showEvents(json) {
+//   for (var i = 0; i < json.page.size; i++) {
+//     $("#events").append("<p>" + json._embedded.events[i]._links + "</p>");
+//   }
+// }
+9;
+//Adds events to the DOM as a list
 function showEvents(json) {
   for (var i = 0; i < json.page.size; i++) {
     $("#events").append("<p>" + json._embedded.events[i].name + "</p>");
   }
 }
 
+//Adds these events onto the map
 function addMarker(map) {
   var marker = new google.maps.Marker({
     position: new google.maps.LatLng(
-      // event._embedded.venues[0].location.latitude,
+      // event._embedded.venues[0].location.latitude, //replace these with the events' lat/long filtered by artist name, event details
       // event._embedded.venues[0].location.longitude
       41.8781,
       -87.6298
@@ -232,9 +275,8 @@ function addMarker(map) {
   console.log(marker);
 }
 
-// getLocation();
 window.initMap = initMap;
-
+getLocation();
 //Event listeners for navbar
 function homebuttonClick() {
   console.log("Home Button Clicked");
@@ -265,7 +307,6 @@ document
   .addEventListener("click", bookmarkClick());
 
 //Event listeners for info overlay
-
 function on() {
   document.getElementById("info-overlay").style.display = "block";
   document.getElementById("info").style.display = "block";
