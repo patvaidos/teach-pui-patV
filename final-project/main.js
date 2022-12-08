@@ -7,6 +7,7 @@
 // const SEARCHDEFAULT = "search default";
 var map;
 // let coords = [];
+let markers = [];
 var infoClicked = false;
 function initMap() {
   // var mapDiv = document.getElementById("map");
@@ -180,6 +181,7 @@ function initMap() {
   // });
 
   // addMarker();
+
   console.log("map done");
 }
 // const searchButton = document.getElementById("form-inline");
@@ -187,27 +189,10 @@ function initMap() {
 //Need to add function that assigns the attractionId variable as the search bar input
 //add event listener that runs this func only after enter or search button is pressed.
 function getSearch() {
-  //--------------------CODE DUMP INBOUND----------------------//
-  // var currentVal = document.getElementById("searchInput");
-  // console.log("search default: " + SEARCHDEFAULT);
-  // console.log("currentVal innerHTML: " + currentVal.innerHTML);
-
-  // if (currentVal.innerHTML !== "Search artist to display tour dates") {
-  //   return currentVal.innerHTML;
-  // } else {
-  //   return SEARCHDEFAULT;
-  // }
-
-  // console.log(searchInput);
-  // searchButton.addEventListener("click", () => {
-  //   const inputValue = searchInput.value;
-  //   return inputValue;
-  // });
   const searchInput = document.getElementById("search-input");
   console.log(searchInput.value);
 
   return searchInput.value;
-  //figure out what to return here
 }
 let keyword;
 //Event handler for the search
@@ -217,6 +202,8 @@ document
 
 function getEventDetails() {
   // var currentVal = getSearch();
+  // map.setMap(null);
+  removeMarkers();
   var e = document.getElementById("events1");
   e.innerHTML = " ";
   var t = document.getElementById("upcomingtoursTitle");
@@ -224,7 +211,7 @@ function getEventDetails() {
   const searchInput = document.getElementById("search-input");
   console.log(searchInput.value);
   var currentVal = searchInput.value;
-  console.log("got the keyword on like 178: " + currentVal);
+  console.log("got the keyword: " + currentVal);
   //clean this up later its atrocious
   keyword = currentVal;
   showPosition();
@@ -376,7 +363,6 @@ function showEvents(json) {
     // latlong = json._embedded.events[i].latlong;
 
     console.log("adding marker");
-    console.log(long);
 
     addMarker(lat, long); //takes the event object from json, gets the name of the event
   }
@@ -386,12 +372,10 @@ function showEvents(json) {
 //THIS IS RUNNING BUT WHY ISNT IT WORKING
 function addMarker(lati, long) {
   console.log("add marker");
-  console.log(lati, long);
   let latlong = { lati, long };
   console.log(latlong);
   let image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
   // console.log(latlong);
-  console.log(this.map);
 
   var marker = new google.maps.Marker({
     position: { lat: lati, lng: long },
@@ -399,13 +383,22 @@ function addMarker(lati, long) {
     // map: this.map,
     // icon: image,
   });
-  // markers.push(marker);
+  markers.push(marker);
 
   // console.log(markers);
   // marker.setIcon("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
   marker.setMap(map);
 }
 
+function removeMarkers() {
+  for (let i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+
+    console.log("marker removed");
+  }
+  markers = [];
+  console.log(markers);
+}
 window.initMap = initMap;
 getLocation();
 //Event listeners for navbar
