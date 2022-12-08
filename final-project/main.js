@@ -6,161 +6,181 @@
 // }
 // const SEARCHDEFAULT = "search default";
 var map;
+// let coords = [];
 var infoClicked = false;
 function initMap() {
   // var mapDiv = document.getElementById("map");
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: { lat: 40.4406, lng: -79.9959 },
-    styles: [
-      {
-        featureType: "water",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#D9D9D9",
-          },
+  if (map == null) {
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 8,
+      center: { lat: 40.4406, lng: -79.9959 },
+      styles: [
+        {
+          featureType: "water",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#D9D9D9",
+            },
+          ],
+        },
+        {
+          featureType: "landscape",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#000000",
+            },
+          ],
+        },
+        {
+          featureType: "poi",
+          stylers: [
+            {
+              color: "#000000",
+            },
+            {
+              lightness: -7,
+            },
+          ],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#000000",
+            },
+            {
+              lightness: -28,
+            },
+          ],
+        },
+        {
+          featureType: "road.arterial",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#000000",
+            },
+            {
+              visibility: "on",
+            },
+            {
+              lightness: -15,
+            },
+          ],
+        },
+        {
+          featureType: "road.local",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#000000",
+            },
+            {
+              lightness: -18,
+            },
+          ],
+        },
+        {
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#2ecc71",
+            },
+          ],
+        },
+        {
+          elementType: "labels.text.stroke",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          featureType: "transit",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#2ecc71",
+            },
+            {
+              lightness: -34,
+            },
+          ],
+        },
+        {
+          featureType: "administrative",
+          elementType: "geometry",
+          stylers: [
+            {
+              visibility: "on",
+            },
+            {
+              color: "#000000",
+            },
+            {
+              weight: 0.8,
+            },
+          ],
+        },
+        {
+          featureType: "poi.park",
+          stylers: [
+            {
+              color: "#000000",
+            },
+          ],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry.stroke",
+          stylers: [
+            {
+              color: "#000000",
+            },
+            {
+              weight: 0.3,
+            },
+            {
+              lightness: 10,
+            },
+          ],
+        },
+      ],
+      mapTypeControlOptions: {
+        mapTypeIds: [
+          google.maps.MapTypeId.ROADMAP,
+          google.maps.MapTypeId.HYBRID,
         ],
       },
-      {
-        featureType: "landscape",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#000000",
-          },
-        ],
+      disableDefaultUI: true,
+      mapTypeControl: false,
+      scaleControl: true,
+      zoomControl: true,
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.LARGE,
       },
-      {
-        featureType: "poi",
-        stylers: [
-          {
-            color: "#000000",
-          },
-          {
-            lightness: -7,
-          },
-        ],
-      },
-      {
-        featureType: "road.highway",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#000000",
-          },
-          {
-            lightness: -28,
-          },
-        ],
-      },
-      {
-        featureType: "road.arterial",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#000000",
-          },
-          {
-            visibility: "on",
-          },
-          {
-            lightness: -15,
-          },
-        ],
-      },
-      {
-        featureType: "road.local",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#000000",
-          },
-          {
-            lightness: -18,
-          },
-        ],
-      },
-      {
-        elementType: "labels.text.fill",
-        stylers: [
-          {
-            color: "#2ecc71",
-          },
-        ],
-      },
-      {
-        elementType: "labels.text.stroke",
-        stylers: [
-          {
-            visibility: "off",
-          },
-        ],
-      },
-      {
-        featureType: "transit",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#2ecc71",
-          },
-          {
-            lightness: -34,
-          },
-        ],
-      },
-      {
-        featureType: "administrative",
-        elementType: "geometry",
-        stylers: [
-          {
-            visibility: "on",
-          },
-          {
-            color: "#000000",
-          },
-          {
-            weight: 0.8,
-          },
-        ],
-      },
-      {
-        featureType: "poi.park",
-        stylers: [
-          {
-            color: "#000000",
-          },
-        ],
-      },
-      {
-        featureType: "road",
-        elementType: "geometry.stroke",
-        stylers: [
-          {
-            color: "#000000",
-          },
-          {
-            weight: 0.3,
-          },
-          {
-            lightness: 10,
-          },
-        ],
-      },
-    ],
-    mapTypeControlOptions: {
-      mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID],
-    },
-    disableDefaultUI: true,
-    mapTypeControl: false,
-    scaleControl: true,
-    zoomControl: true,
-    zoomControlOptions: {
-      style: google.maps.ZoomControlStyle.LARGE,
-    },
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-  });
-  addMarker(map);
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+    });
+  }
+  // const latlong = { lat: -25.363, lng: 131.044 };
+
+  // map = new google.maps.Map(document.getElementById("map"), {
+  //   zoom: 4,
+  //   center: latlong,
+  // });
+
+  // new google.maps.Marker({
+  //   position: latlong,
+  //   map,
+  //   title: "title",
+  // });
+
+  // addMarker();
+  console.log("map done");
 }
 // const searchButton = document.getElementById("form-inline");
 
@@ -189,7 +209,7 @@ function getSearch() {
   return searchInput.value;
   //figure out what to return here
 }
-
+let keyword;
 //Event handler for the search
 document
   .querySelector("#search-button")
@@ -197,14 +217,18 @@ document
 
 function getEventDetails() {
   // var currentVal = getSearch();
+  var e = document.getElementById("events1");
+  e.innerHTML = " ";
+  var t = document.getElementById("upcomingtoursTitle");
+  t.innerHTML = "Upcoming Tours";
   const searchInput = document.getElementById("search-input");
   console.log(searchInput.value);
   var currentVal = searchInput.value;
   console.log("got the keyword on like 178: " + currentVal);
   //clean this up later its atrocious
-  var keyword = currentVal;
-
-  return keyword; //do something about this return idk
+  keyword = currentVal;
+  showPosition();
+  // return keyword; //do something about this return idk
 }
 //Gets geolocation of browser user. Browser will automatically ask users for permission in order to access latitude and longitude values.
 //This also runs showPosition() so that you can get the filtered results
@@ -249,7 +273,7 @@ function showPosition(position) {
   //   "<br>Longitude: " +
   //   position.coords.longitude;
   // var latlon = position.coords.latitude + "," + position.coords.longitude;
-  var keyword = getEventDetails();
+  // var keyword = getEventDetails();
 
   //Filter the results
   $.ajax({
@@ -261,13 +285,21 @@ function showPosition(position) {
     dataType: "json",
     success: function (json) {
       console.log(json);
-      var e = document.getElementById("events");
-      e.innerHTML = json.page.totalElements + " events found.";
+      // var e = document.getElementById("events");
+      // e.innerHTML = " Recent Attractions Near You: ";
+      if (keyword != undefined) {
+        var n = document.getElementById("artistname");
+        n.innerHTML = keyword;
+      }
+
       showEvents(json); //adds events to the DOM
-      initMap(position, json); //why does this need position??? in case this crashes: position, json;
+      initMap();
+      // initMap(position, json); //why does this need position??? in case this crashes: position, json;
       console.log("position:" + position);
     },
     error: function (xhr, status, err) {
+      var r = document.getElementById("notFound");
+      r.innerHTML = "No events were found under the name " + keyword;
       console.log(err);
     },
   });
@@ -284,8 +316,53 @@ function showPosition(position) {
 function showEvents(json) {
   let lat;
   let long;
+  // var p = document.getElementById("placeholder");
+  // console.log(json._embedded.events[i].images[0]);
+  // p.src = json._embedded.events[i].images[0];
+
+  //   $.ajax({
+  //   type:"GET",
+  //   url:"https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&keyword=",
+  //   async:true,
+  //   dataType: "json",
+  //   success: function(json) {
+  //               console.log(json);
+  //               // Parse the response.
+  //               // Do other things.
+  //            },
+  //   error: function(xhr, status, err) {
+  //               // This time, we do not end up here!
+  //            }
+  // });
+
+  // for (var i = 0; i < 2; i++) {
   for (var i = 0; i < json.page.size; i++) {
-    $("#events").append("<p>" + json._embedded.events[i].name + "</p>");
+    // if (i <= 20) {
+    $("#events1").append("<p>" + json._embedded.events[i].name + "</p>");
+
+    // var date = document.getElementById("eventdate");
+    // date.innerHTML = json._embedded.events[i].dates.start.localDate;
+
+    // var city = document.getElementById("city");
+    // city.innerHTML = json._embedded.events[i]._embedded.venues[0].city;
+
+    // var state = document.getElementById("state");
+    // state.innerHTML =
+    //   json._embedded.events[i]._embedded.venues[0].state.stateCode;
+
+    // var country = document.getElementById("country");
+    // country.innerHTML =
+    //   json._embedded.events[i]._embedded.venues[0].country.countryCode;
+
+    // var venue = document.getElementById("venue");
+    // venue.innerHTML = json._embedded.events[i]._embedded.venues[0].name;
+
+    // $("#eventname").append("<p>" + json._embedded.events[i].name + "</p>");
+    //   console.log(i);
+    // } else if (i >= 5) {
+    //   $("#events2").append("<p>" + json._embedded.events[i].name + "</p>");
+    // }
+
     // console.log(json._embedded.events[i].name);
 
     lat = parseFloat(
@@ -298,22 +375,35 @@ function showEvents(json) {
 
     // latlong = json._embedded.events[i].latlong;
 
+    console.log("adding marker");
+    console.log(long);
+
     addMarker(lat, long); //takes the event object from json, gets the name of the event
   }
 }
 
 //Adds these events onto the map
+//THIS IS RUNNING BUT WHY ISNT IT WORKING
 function addMarker(lati, long) {
+  console.log("add marker");
+  console.log(lati, long);
   let latlong = { lati, long };
-  let image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
   console.log(latlong);
-  var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(latlong),
-    map: this.map,
-    icon: image,
-  });
+  let image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+  // console.log(latlong);
+  console.log(this.map);
 
-  marker.setMap();
+  var marker = new google.maps.Marker({
+    position: { lat: lati, lng: long },
+    // position: new google.maps.LatLng(lati, long),
+    // map: this.map,
+    // icon: image,
+  });
+  // markers.push(marker);
+
+  // console.log(markers);
+  // marker.setIcon("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+  marker.setMap(map);
 }
 
 window.initMap = initMap;
@@ -333,9 +423,9 @@ function questionMarkClick() {
   }
 }
 
-// document
-//   .querySelector("#questionMarkIcon")
-//   .addEventListener("onclick", questionMarkClick());
+document
+  .querySelector("#questionMarkIcon")
+  .addEventListener("onclick", questionMarkClick());
 
 function bookmarkClick() {
   console.log("Bookmark Button Clicked");
