@@ -1,14 +1,7 @@
-// class SearchObject {
-//   constructor(defaultValue, currentValue){
-//     this.defaultValue = defaultValue;
-//     this.currentValue = currentValue;
-//   }
-// }
-// const SEARCHDEFAULT = "search default";
-var map;
-// let coords = [];
+let map;
 let markers = [];
-var infoClicked = false;
+let infoClicked = false;
+let keyword;
 function initMap() {
   // var mapDiv = document.getElementById("map");
   if (map == null) {
@@ -167,20 +160,6 @@ function initMap() {
       mapTypeId: google.maps.MapTypeId.ROADMAP,
     });
   }
-  // const latlong = { lat: -25.363, lng: 131.044 };
-
-  // map = new google.maps.Map(document.getElementById("map"), {
-  //   zoom: 4,
-  //   center: latlong,
-  // });
-
-  // new google.maps.Marker({
-  //   position: latlong,
-  //   map,
-  //   title: "title",
-  // });
-
-  // addMarker();
 
   console.log("map done");
 }
@@ -194,7 +173,7 @@ function getSearch() {
 
   return searchInput.value;
 }
-let keyword;
+
 //Event handler for the search
 document
   .querySelector("#search-button")
@@ -217,6 +196,7 @@ function getEventDetails() {
   showPosition();
   // return keyword; //do something about this return idk
 }
+
 //Gets geolocation of browser user. Browser will automatically ask users for permission in order to access latitude and longitude values.
 //This also runs showPosition() so that you can get the filtered results
 function getLocation() {
@@ -252,22 +232,12 @@ function showError(error) {
 //Find events from Discovery API and filter results
 //Pass in the keyword instead of the position, show all events.
 function showPosition(position) {
-  //Find the events
-  // var x = document.getElementById("location");
-  // x.innerHTML =
-  //   "Latitude: " +
-  //   position.coords.latitude +
-  //   "<br>Longitude: " +
-  //   position.coords.longitude;
-  // var latlon = position.coords.latitude + "," + position.coords.longitude;
-  // var keyword = getEventDetails();
-
   //Filter the results
   $.ajax({
     type: "GET",
     url:
       "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&keyword=" +
-      keyword, // changed to keyword, much better :)
+      keyword,
     async: true,
     dataType: "json",
     success: function (json) {
@@ -292,37 +262,11 @@ function showPosition(position) {
   });
 }
 
-//Gets event objects from the filtered results and appends to
-// function showEvents(json) {
-//   for (var i = 0; i < json.page.size; i++) {
-//     $("#events").append("<p>" + json._embedded.events[i]._links + "</p>");
-//   }
-// }
-
 //Gets the name of the event and shows is t
 function showEvents(json) {
   let lat;
   let long;
-  // var p = document.getElementById("placeholder");
-  // console.log(json._embedded.events[i].images[0]);
-  // p.src = json._embedded.events[i].images[0];
 
-  //   $.ajax({
-  //   type:"GET",
-  //   url:"https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kshjKAwSA1epUdiKUQuDvHKBAmMaubAC&keyword=",
-  //   async:true,
-  //   dataType: "json",
-  //   success: function(json) {
-  //               console.log(json);
-  //               // Parse the response.
-  //               // Do other things.
-  //            },
-  //   error: function(xhr, status, err) {
-  //               // This time, we do not end up here!
-  //            }
-  // });
-
-  // for (var i = 0; i < 2; i++) {
   for (var i = 0; i < json.page.size; i++) {
     // if (i <= 20) {
     $("#events1").append("<p>" + json._embedded.events[i].name + "</p>");
@@ -376,17 +320,11 @@ function addMarker(lati, long) {
   console.log(latlong);
   let image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
   // console.log(latlong);
-
   var marker = new google.maps.Marker({
     position: { lat: lati, lng: long },
-    // position: new google.maps.LatLng(lati, long),
-    // map: this.map,
-    // icon: image,
   });
   markers.push(marker);
-
-  // console.log(markers);
-  // marker.setIcon("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+  createInfoWindow();
   marker.setMap(map);
 }
 
@@ -399,14 +337,39 @@ function removeMarkers() {
   markers = [];
   console.log(markers);
 }
+
+// function createInfoWindow(){
+//   let infoWindow = google.maps.infoWindow({
+//     content:
+//     keyword + "is coming to " + json._embedded.events[i]._embedded.venues[0].city + "!",
+//     ariaLabel: keyword,
+//   })
+
+// }
+
+// function addInfoWindows(){
+//   for(var i = 0; i < markers.length;i++){
+//     document.addEventListener("click", () => {
+//       let infoWindow = google.maps.InfoWindow({
+//         content:
+//          keyword + "is coming to " + json._embedded.events[i]._embedded.venues[0].city + "!",
+//          ariaLabel: keyword,
+//       },
+//       infoWindow.open({
+//         anchor: marker,
+//         map,
+//       }))
+//     })
+//   }
+// }
+
 window.initMap = initMap;
 getLocation();
+
 //Event listeners for navbar
 function homebuttonClick() {
   console.log("Home Button Clicked");
 }
-
-// document.querySelector("#searchIcon").addEventListener("onclick", getSearch());
 
 function questionMarkClick() {
   console.log("Question Button Clicked");
