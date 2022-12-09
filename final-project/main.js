@@ -182,7 +182,7 @@ document
 function getEventDetails() {
   // var currentVal = getSearch();
   // map.setMap(null);
-  removeMarkers();
+  // removeMarkers();
   var e = document.getElementById("events1");
   e.innerHTML = " ";
   var t = document.getElementById("upcomingtoursTitle");
@@ -268,34 +268,35 @@ function showEvents(json) {
   let long;
 
   for (var i = 0; i < json.page.size; i++) {
-    // if (i <= 20) {
-    $("#events1").append("<p>" + json._embedded.events[i].name + "</p>");
+    // let url = document.getElementById("events");
+    // url.href = json._embedded.events[i].url;
+    $("#events1").append(
+      "<p" +
+        "id='eventname'>" +
+        json._embedded.events[i].name +
+        "</p>" +
+        "<p id='eventdate'>" +
+        json._embedded.events[i].dates.start.localDate +
+        "</p>" +
+        "<p id='eventlocation'>" +
+        json._embedded.events[i]._embedded.venues[0].city.name +
+        ", " +
+        json._embedded.events[i]._embedded.venues[0].state.stateCode +
+        ", " +
+        json._embedded.events[i]._embedded.venues[0].country.countryCode +
+        "</p>" +
+        "<p id='venue'>" +
+        json._embedded.events[i]._embedded.venues[0].name +
+        "</p>" +
+        "<p>" +
+        "<a id='link' href=" +
+        json._embedded.events[i].url +
+        ">" +
+        "Click here for more info" +
+        "</p>"
+    );
 
-    // var date = document.getElementById("eventdate");
-    // date.innerHTML = json._embedded.events[i].dates.start.localDate;
-
-    // var city = document.getElementById("city");
-    // city.innerHTML = json._embedded.events[i]._embedded.venues[0].city;
-
-    // var state = document.getElementById("state");
-    // state.innerHTML =
-    //   json._embedded.events[i]._embedded.venues[0].state.stateCode;
-
-    // var country = document.getElementById("country");
-    // country.innerHTML =
-    //   json._embedded.events[i]._embedded.venues[0].country.countryCode;
-
-    // var venue = document.getElementById("venue");
-    // venue.innerHTML = json._embedded.events[i]._embedded.venues[0].name;
-
-    // $("#eventname").append("<p>" + json._embedded.events[i].name + "</p>");
-    //   console.log(i);
-    // } else if (i >= 5) {
-    //   $("#events2").append("<p>" + json._embedded.events[i].name + "</p>");
-    // }
-
-    // console.log(json._embedded.events[i].name);
-
+    console.log(json._embedded.events[i].url);
     lat = parseFloat(
       json._embedded.events[i]._embedded.venues[0].location.latitude
     );
@@ -324,7 +325,7 @@ function addMarker(lati, long) {
     position: { lat: lati, lng: long },
   });
   markers.push(marker);
-  createInfoWindow();
+  // createInfoWindow();
   marker.setMap(map);
 }
 
