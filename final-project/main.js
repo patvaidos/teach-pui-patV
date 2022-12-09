@@ -1,9 +1,11 @@
+//Global variables declared here
 let map;
 let markers = [];
 let infoClicked = false;
 let keyword;
+
+//Initiates map with style and position defaults
 function initMap() {
-  // var mapDiv = document.getElementById("map");
   if (map == null) {
     map = new google.maps.Map(document.getElementById("map"), {
       zoom: 8,
@@ -160,18 +162,6 @@ function initMap() {
       mapTypeId: google.maps.MapTypeId.ROADMAP,
     });
   }
-
-  console.log("map done");
-}
-// const searchButton = document.getElementById("form-inline");
-
-//Need to add function that assigns the attractionId variable as the search bar input
-//add event listener that runs this func only after enter or search button is pressed.
-function getSearch() {
-  const searchInput = document.getElementById("search-input");
-  console.log(searchInput.value);
-
-  return searchInput.value;
 }
 
 //Event handler for the search
@@ -180,21 +170,16 @@ document
   .addEventListener("submit", getEventDetails);
 
 function getEventDetails() {
-  // var currentVal = getSearch();
-  // map.setMap(null);
-  // removeMarkers();
-  var e = document.getElementById("events1");
+  let e = document.getElementById("events1");
   e.innerHTML = " ";
-  var t = document.getElementById("upcomingtoursTitle");
+  let t = document.getElementById("upcomingtoursTitle");
   t.innerHTML = "Upcoming Tours";
   const searchInput = document.getElementById("search-input");
-  console.log(searchInput.value);
-  var currentVal = searchInput.value;
-  console.log("got the keyword: " + currentVal);
-  //clean this up later its atrocious
+
+  let currentVal = searchInput.value;
+
   keyword = currentVal;
   showPosition();
-  // return keyword; //do something about this return idk
 }
 
 //Gets geolocation of browser user. Browser will automatically ask users for permission in order to access latitude and longitude values.
@@ -202,12 +187,8 @@ function getEventDetails() {
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
-    console.log(
-      "current location: " +
-        navigator.geolocation.getCurrentPosition(showPosition, showError)
-    );
   } else {
-    var x = document.getElementById("location");
+    let x = document.getElementById("location");
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
@@ -230,7 +211,6 @@ function showError(error) {
 }
 
 //Find events from Discovery API and filter results
-//Pass in the keyword instead of the position, show all events.
 function showPosition(position) {
   //Filter the results
   $.ajax({
@@ -241,35 +221,29 @@ function showPosition(position) {
     async: true,
     dataType: "json",
     success: function (json) {
-      console.log(json);
-      // var e = document.getElementById("events");
-      // e.innerHTML = " Recent Attractions Near You: ";
       if (keyword != undefined) {
-        var n = document.getElementById("artistname");
+        let n = document.getElementById("artistname");
         n.innerHTML = keyword;
       }
 
-      showEvents(json); //adds events to the DOM
+      showEvents(json);
       initMap();
-      // initMap(position, json); //why does this need position??? in case this crashes: position, json;
-      console.log("position:" + position);
     },
     error: function (xhr, status, err) {
-      var r = document.getElementById("notFound");
+      let r = document.getElementById("notFound");
       r.innerHTML = "No events were found under the name " + keyword;
       console.log(err);
     },
   });
 }
 
-//Gets the name of the event and shows is t
+//Retrieves event information and displays it on the DOM. This also retrieves the event's coordinates and
+//feeds it into the addMarker() function as an input.
 function showEvents(json) {
   let lat;
   let long;
 
-  for (var i = 0; i < json.page.size; i++) {
-    // let url = document.getElementById("events");
-    // url.href = json._embedded.events[i].url;
+  for (let i = 0; i < json.page.size; i++) {
     $("#events1").append(
       "<p" +
         "id='eventname'>" +
@@ -296,7 +270,6 @@ function showEvents(json) {
         "</p>"
     );
 
-    console.log(json._embedded.events[i].url);
     lat = parseFloat(
       json._embedded.events[i]._embedded.venues[0].location.latitude
     );
@@ -305,64 +278,27 @@ function showEvents(json) {
       json._embedded.events[i]._embedded.venues[0].location.longitude
     );
 
-    // latlong = json._embedded.events[i].latlong;
-
-    console.log("adding marker");
-
-    addMarker(lat, long); //takes the event object from json, gets the name of the event
+    addMarker(lat, long);
   }
 }
 
-//Adds these events onto the map
-//THIS IS RUNNING BUT WHY ISNT IT WORKING
+//Adds markers onto the map
 function addMarker(lati, long) {
-  console.log("add marker");
-  let latlong = { lati, long };
-  console.log(latlong);
-  let image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
-  // console.log(latlong);
-  var marker = new google.maps.Marker({
+  let marker = new google.maps.Marker({
     position: { lat: lati, lng: long },
   });
   markers.push(marker);
-  // createInfoWindow();
+
   marker.setMap(map);
 }
 
+//Removes location markers from the map.
 function removeMarkers() {
   for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
-
-    console.log("marker removed");
   }
   markers = [];
-  console.log(markers);
 }
-
-// function createInfoWindow(){
-//   let infoWindow = google.maps.infoWindow({
-//     content:
-//     keyword + "is coming to " + json._embedded.events[i]._embedded.venues[0].city + "!",
-//     ariaLabel: keyword,
-//   })
-
-// }
-
-// function addInfoWindows(){
-//   for(var i = 0; i < markers.length;i++){
-//     document.addEventListener("click", () => {
-//       let infoWindow = google.maps.InfoWindow({
-//         content:
-//          keyword + "is coming to " + json._embedded.events[i]._embedded.venues[0].city + "!",
-//          ariaLabel: keyword,
-//       },
-//       infoWindow.open({
-//         anchor: marker,
-//         map,
-//       }))
-//     })
-//   }
-// }
 
 window.initMap = initMap;
 getLocation();
@@ -388,10 +324,6 @@ function bookmarkClick() {
   console.log("Bookmark Button Clicked");
 }
 
-// document
-//   .querySelector("#bookmarkicon")
-//   .addEventListener("onclick", bookmarkClick());
-
 //Event listeners for info overlay
 function on() {
   document.getElementById("info-overlay").style.display = "block";
@@ -404,6 +336,5 @@ function off() {
   document.getElementById("info-overlay").style.display = "none";
   document.getElementById("info").style.display = "none";
   infoClicked = false;
-  console.log("infoCLicked:" + infoClicked);
   console.log("off");
 }
